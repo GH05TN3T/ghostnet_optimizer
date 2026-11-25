@@ -14,6 +14,7 @@ Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, m
 | **Optimización** | Puntuación 0–100, mantenimiento, tweaks recomendados por sección, resumen del sistema en vivo y "Aplicar todo" con punto de restauración |
 | **Tweaks** | 66 interruptores en tarjetas por categoría, con "Detalles" que muestra exactamente qué cambia, revertir todo y aplicar recomendados |
 | **Comprimir** | CompactOS, limpieza de WinSxS, quitar hiberfil.sys y el almacenamiento reservado |
+| **Builder** | Crea una ISO de Windows 11 sin bloatware a partir de la ISO oficial: perfiles Ligero, Gaming y Mínimo, saltar requisitos de TPM/CPU, cuenta local, limpieza profunda y compresión ESD. Usa DISM y oscdimg de Microsoft; no toca el sistema actual |
 | **Energía** | Planes de energía, estado en vivo, detalles del plan editables y ajustes adicionales (hibernación, inicio rápido, USB, PCIe) |
 
 `Ctrl + K` abre el buscador de páginas y ajustes.

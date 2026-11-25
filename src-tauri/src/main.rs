@@ -3,6 +3,7 @@
 
 mod apps;
 mod bloat;
+mod builder;
 mod cleanup;
 mod games;
 mod power;
@@ -179,6 +180,43 @@ async fn game_optimize(exe: String, enable: bool) -> R<()> {
     blocking(move || games::optimize(&exe, enable)).await
 }
 
+// ---------- Builder de Windows ----------
+
+#[tauri::command]
+async fn builder_inspect(iso: String) -> R<builder::IsoInfo> {
+    blocking(move || builder::inspect(&iso)).await
+}
+
+#[tauri::command]
+async fn builder_hash(iso: String) -> R<String> {
+    blocking(move || builder::hash(&iso)).await
+}
+
+#[tauri::command]
+fn builder_start(app: tauri::AppHandle, options: builder::BuildOptions) -> R<()> {
+    builder::start(app, options)
+}
+
+#[tauri::command]
+async fn builder_cancel(out: String, iso: String) -> R<()> {
+    blocking(move || builder::cancel(&out, &iso)).await
+}
+
+#[tauri::command]
+fn builder_running() -> bool {
+    builder::running()
+}
+
+#[tauri::command]
+fn reveal_file(path: String) -> R<()> {
+    builder::reveal(&path)
+}
+
+#[tauri::command]
+fn open_iso_download() -> R<()> {
+    builder::open_iso_download()
+}
+
 // ---------- Limpieza ----------
 
 #[tauri::command]
@@ -222,6 +260,7 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_dialog::init())
         .manage(Mutex::new(system::Monitor::new()))
         .invoke_handler(tauri::generate_handler![
             system_info,
@@ -250,6 +289,13 @@ fn main() {
             app_uninstall,
             games_list,
             game_optimize,
+            builder_inspect,
+            builder_hash,
+            builder_start,
+            builder_cancel,
+            builder_running,
+            reveal_file,
+            open_iso_download,
             scan_junk,
             clean_junk,
             component_cleanup,

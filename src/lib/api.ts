@@ -32,6 +32,25 @@ export interface Game {
   optimized: boolean;
 }
 
+export interface IsoInfo {
+  editions: { index: number; name: string }[];
+  arch: string;
+  version: string;
+  size: number;
+  esd: boolean;
+}
+
+export interface BuildOptions {
+  iso: string;
+  out: string;
+  index: number;
+  profile: "ligero" | "gaming" | "minimo";
+  bypass: boolean;
+  local_account: boolean;
+  deep_clean: boolean;
+  esd: boolean;
+}
+
 export interface PowerStatus {
   battery: number | null;
   plugged: boolean;
@@ -178,6 +197,13 @@ export const api = {
 
   gamesList: () => call<Game[]>("games_list"),
   gameOptimize: (exe: string, enable: boolean) => call<void>("game_optimize", { exe, enable }),
+
+  builderInspect: (iso: string) => call<IsoInfo>("builder_inspect", { iso }),
+  builderHash: (iso: string) => call<string>("builder_hash", { iso }),
+  builderStart: (options: BuildOptions) => call<void>("builder_start", { options }),
+  builderCancel: (out: string, iso: string) => call<void>("builder_cancel", { out, iso }),
+  revealFile: (path: string) => call<void>("reveal_file", { path }),
+  openIsoDownload: () => call<void>("open_iso_download"),
 
   scanJunk: () => call<JunkCategory[]>("scan_junk"),
   cleanJunk: (ids: string[]) => call<number>("clean_junk", { ids }),

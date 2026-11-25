@@ -1,6 +1,6 @@
 [package]
 name = "optimizador"
-version = "1.1.0"
+version = "1.2.0"
 description = "Optimizador de Windows 10/11 (uso personal)"
 edition = "2021"
 
@@ -15,6 +15,7 @@ sysinfo = "0.33"
 walkdir = "2"
 tauri-plugin-updater = "2"
 tauri-plugin-process = "2"
+tauri-plugin-dialog = "2"
 
 [profile.release]
 codegen-units = 1

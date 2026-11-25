@@ -10,6 +10,7 @@ import {
   IconGamepad,
   IconGrid,
   IconHome,
+  IconLayers,
   IconMaximize,
   IconMinimize,
   IconPower,
@@ -32,8 +33,10 @@ import Power from "./pages/Power";
 import Cleanup from "./pages/Cleanup";
 import Apps from "./pages/Apps";
 import Compress from "./pages/Compress";
+import Builder from "./pages/Builder";
+import { useBuilder } from "./lib/builder";
 
-export type PageId = "home" | "gaming" | "apps" | "debloat" | "cleanup" | "optimize" | "tweaks" | "compress" | "power";
+export type PageId = "home" | "gaming" | "apps" | "debloat" | "cleanup" | "optimize" | "tweaks" | "compress" | "builder" | "power";
 
 const PAGES: { id: PageId; label: string; icon: ReactNode }[] = [
   { id: "home", label: "Inicio", icon: <IconHome /> },
@@ -44,6 +47,7 @@ const PAGES: { id: PageId; label: string; icon: ReactNode }[] = [
   { id: "optimize", label: "Optimización", icon: <IconSliders /> },
   { id: "tweaks", label: "Tweaks", icon: <IconWrench /> },
   { id: "compress", label: "Comprimir", icon: <IconArchive /> },
+  { id: "builder", label: "Builder", icon: <IconLayers /> },
   { id: "power", label: "Energía", icon: <IconBolt /> },
 ];
 
@@ -56,6 +60,7 @@ export default function App() {
   const [rp, setRp] = useState(false);
   const [maximized, setMaximized] = useState(false);
   const updater = useUpdater();
+  const build = useBuilder();
 
   // Ventana sin marco: controles propios de minimizar / maximizar / cerrar.
   useEffect(() => {
@@ -131,6 +136,7 @@ export default function App() {
             <button key={p.id} className={`nav-item ${page === p.id ? "is-active" : ""}`} onClick={() => go(p.id)}>
               {p.icon}
               <span>{p.label}</span>
+              {p.id === "builder" && build.status === "running" && <span className="spinner spinner--sm nav-item__busy" />}
             </button>
           ))}
         </nav>
@@ -210,6 +216,7 @@ export default function App() {
           {page === "cleanup" && <Cleanup />}
           {page === "apps" && <Apps />}
           {page === "compress" && <Compress />}
+          {page === "builder" && <Builder />}
         </div>
       </main>
 

@@ -351,3 +351,25 @@ export const IconPower = (p: P) => (
     <path d="M6.3 6.8a8 8 0 1 0 11.4 0" />
   </Svg>
 );
+
+export const IconLayers = (p: P) => (
+  <Svg {...p}>
+    <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+    <path d="m3 13 9 5 9-5" />
+    <path d="m3 17.5 9 5 9-5" />
+  </Svg>
+);
+
+export const IconDisc = (p: P) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="2.5" />
+    <path d="M12 3a9 9 0 0 1 9 9" opacity=".5" />
+  </Svg>
+);
+
+export const IconFolder = (p: P) => (
+  <Svg {...p}>
+    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+  </Svg>
+);

@@ -379,6 +379,37 @@ mod tests {
     }
 
     #[test]
+    fn builder_script_is_balanced() {
+        // Quita comentarios de línea y here-strings (@" ... "@) antes de comprobar.
+        let src = include_str!("../builder.ps1");
+        let mut out = String::new();
+        let mut in_here = false;
+        for line in src.lines() {
+            let t = line.trim_start();
+            if in_here {
+                if t.starts_with("\"@") {
+                    in_here = false;
+                    out.push_str("\"\"\n");
+                }
+                continue;
+            }
+            if t.starts_with('#') {
+                continue;
+            }
+            if let Some(pos) = line.find("@\"") {
+                if line[pos + 2..].trim().is_empty() {
+                    out.push_str(&line[..pos]);
+                    in_here = true;
+                    continue;
+                }
+            }
+            out.push_str(line);
+            out.push('\n');
+        }
+        balanced(&out).expect("builder.ps1 desequilibrado");
+    }
+
+    #[test]
     fn dump_example() {
         let t = find("telemetry").unwrap();
         println!("CHECK: {}\nAPPLY:\n{}\nREVERT:\n{}", check_expr(t), apply_script(t), revert_script(t));
