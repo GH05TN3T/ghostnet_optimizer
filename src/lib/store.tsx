@@ -125,6 +125,7 @@ export interface History {
   gpu: number[];
   down: number[];
   up: number[];
+  disk: number[];
 }
 
 interface StatsState {
@@ -139,7 +140,7 @@ export const useStats = () => useContext(StatsCtx);
 function StatsProvider({ children }: { children: ReactNode }) {
   const [stats, setStats] = useState<LiveStats | null>(null);
   const [info, setInfo] = useState<SysInfo | null>(null);
-  const hist = useRef<History>({ cpu: [], ram: [], gpu: [], down: [], up: [] });
+  const hist = useRef<History>({ cpu: [], ram: [], gpu: [], down: [], up: [], disk: [] });
   const [history, setHistory] = useState<History>(hist.current);
 
   useEffect(() => {
@@ -159,6 +160,7 @@ function StatsProvider({ children }: { children: ReactNode }) {
           gpu: push(h.gpu, Math.max(0, s.gpu)),
           down: push(h.down, s.net_down),
           up: push(h.up, s.net_up),
+          disk: push(h.disk, s.disk_read + s.disk_write),
         };
         setStats(s);
         setHistory(hist.current);

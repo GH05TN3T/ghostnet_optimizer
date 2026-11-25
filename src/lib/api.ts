@@ -123,6 +123,7 @@ export const api = {
   systemInfo: () => call<SysInfo>("system_info"),
   liveStats: () => call<LiveStats>("live_stats"),
   killProcess: (name: string) => call<number>("kill_process", { name }),
+  ping: () => call<{ ms: number | null; jitter: number | null }>("ping"),
   cleanRam: () => call<number>("clean_ram"),
   createRestorePoint: () => call<void>("create_restore_point"),
   openRestoreUi: () => call<void>("open_restore_ui"),

@@ -1,19 +1,161 @@
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { PageId } from "../App";
-import { Area, Ring } from "../components/Charts";
-import { IconBroom, IconGauge, IconRestore, IconRocket } from "../components/Icons";
-import { Bar, Button, Card, PageHeader } from "../components/ui";
-import { api, errMsg } from "../lib/api";
-import { bytes, rate, uptime } from "../lib/format";
+import { RingIcon, Spark } from "../components/Charts";
+import {
+  IconArchive,
+  IconArrowDown,
+  IconArrowUp,
+  IconBox,
+  IconBroom,
+  IconChevron,
+  IconCpu,
+  IconDatabase,
+  IconDisk,
+  IconGauge,
+  IconGpu,
+  IconLeaf,
+  IconMemory,
+  IconMonitor,
+  IconShield,
+  IconSparkle,
+  IconWand,
+  IconWifi,
+} from "../components/Icons";
+import { api, errMsg, inTauri } from "../lib/api";
+import { bytes, rate } from "../lib/format";
 import { useStats, useToast } from "../lib/store";
+
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 6) return "Buenas noches";
+  if (h < 12) return "Buenos días";
+  if (h < 20) return "Buenas tardes";
+  return "Buenas noches";
+}
+
+function HeroArt() {
+  return (
+    <svg className="hero__art" viewBox="0 0 1000 220" preserveAspectRatio="xMidYMid slice" aria-hidden>
+      <defs>
+        <linearGradient id="hbg" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#14111a" stopOpacity="0" />
+          <stop offset="0.45" stopColor="#3a0f2a" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#5a1238" stopOpacity="0.95" />
+        </linearGradient>
+        <linearGradient id="hw1" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stopColor="#ff4f8b" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#7a1450" stopOpacity="0.2" />
+        </linearGradient>
+        <linearGradient id="hw2" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#b41f6a" stopOpacity="0.1" />
+          <stop offset="0.6" stopColor="#e8336d" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#ff86b0" stopOpacity="0.35" />
+        </linearGradient>
+        <linearGradient id="hw3" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#3b0a2a" stopOpacity="0" />
+          <stop offset="1" stopColor="#2a0820" stopOpacity="0.95" />
+        </linearGradient>
+        <radialGradient id="hb" cx="0.35" cy="0.3" r="0.75">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.85" />
+          <stop offset="0.25" stopColor="#ffc2d8" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#e8336d" stopOpacity="0.05" />
+        </radialGradient>
+        <filter id="hblur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="18" />
+        </filter>
+      </defs>
+      <rect width="1000" height="220" fill="url(#hbg)" />
+      <ellipse cx="760" cy="200" rx="260" ry="70" fill="#e8336d" opacity="0.35" filter="url(#hblur)" />
+      <path d="M380 220 C 520 150, 600 120, 700 130 S 880 90, 1000 60 L1000 220 Z" fill="url(#hw2)" />
+      <path d="M440 220 C 560 170, 650 175, 740 150 S 900 120, 1000 125 L1000 220 Z" fill="url(#hw1)" opacity="0.75" />
+      <path d="M520 220 C 640 195, 720 200, 820 180 S 950 170, 1000 175 L1000 220 Z" fill="url(#hw3)" />
+      <path d="M380 220 C 520 150, 600 120, 700 130 S 880 90, 1000 60" fill="none" stroke="#ffb3cd" strokeOpacity="0.35" />
+      <circle cx="640" cy="92" r="26" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.35" />
+      <circle cx="585" cy="48" r="8" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.3" />
+      <circle cx="560" cy="168" r="11" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.3" />
+      <circle cx="505" cy="62" r="5" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.25" />
+      {[
+        [540, 110],
+        [690, 75],
+        [770, 105],
+      ].map(([x, y]) => (
+        <path
+          key={`${x}${y}`}
+          d={`M${x} ${y - 6} L${x + 1.5} ${y - 1.5} L${x + 6} ${y} L${x + 1.5} ${y + 1.5} L${x} ${y + 6} L${x - 1.5} ${y + 1.5} L${x - 6} ${y} L${x - 1.5} ${y - 1.5} Z`}
+          fill="#ffffff"
+          opacity="0.7"
+        />
+      ))}
+    </svg>
+  );
+}
+
+function StatCard({
+  icon,
+  label,
+  value,
+  sub,
+  ring,
+  spark,
+  tone,
+  sparkMax,
+  onClick,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  sub: string;
+  ring: number | null;
+  spark: number[];
+  tone?: "pink" | "blue";
+  sparkMax?: number;
+  onClick: () => void;
+}) {
+  return (
+    <button className="stat" onClick={onClick}>
+      <div className="stat__top">
+        <RingIcon value={ring}>{icon}</RingIcon>
+        <div className="stat__text">
+          <small>{label}</small>
+          <strong>{value}</strong>
+          <span>{sub}</span>
+        </div>
+        <IconChevron size={15} className="stat__chev" />
+      </div>
+      <Spark data={spark} max={sparkMax} tone={tone} />
+    </button>
+  );
+}
 
 export default function Home({ go }: { go: (p: PageId) => void }) {
   const { stats, history, info } = useStats();
   const toast = useToast();
   const [ram, setRam] = useState(false);
-  const [rp, setRp] = useState(false);
+  const [ping, setPing] = useState<{ ms: number | null; jitter: number | null } | null>(null);
+
+  useEffect(() => {
+    if (!inTauri) return;
+    let alive = true;
+    const run = () =>
+      api
+        .ping()
+        .then((p) => alive && setPing(p))
+        .catch(() => {});
+    run();
+    const t = window.setInterval(run, 6000);
+    return () => {
+      alive = false;
+      window.clearInterval(t);
+    };
+  }, []);
 
   const ramPct = stats && stats.ram_total ? (stats.ram_used / stats.ram_total) * 100 : null;
+  const sysDisk = stats?.disks.find((d) => /^c:/i.test(d.mount)) ?? stats?.disks[0];
+  const diskPct = sysDisk && sysDisk.total ? ((sysDisk.total - sysDisk.free) / sysDisk.total) * 100 : null;
+  const total = stats?.disks.reduce((a, d) => a + d.total, 0) ?? 0;
+  const free = stats?.disks.reduce((a, d) => a + d.free, 0) ?? 0;
+  const usedPct = total ? ((total - free) / total) * 100 : 0;
+  const gpuOk = !!stats && stats.gpu >= 0;
 
   const freeRam = async () => {
     setRam(true);
@@ -27,139 +169,235 @@ export default function Home({ go }: { go: (p: PageId) => void }) {
     }
   };
 
-  const restore = async () => {
-    setRp(true);
-    try {
-      await api.createRestorePoint();
-      toast("Punto de restauración creado");
-    } catch (e) {
-      toast(errMsg(e), "error");
-    } finally {
-      setRp(false);
-    }
-  };
+  const actions: { label: string; sub: string; tone: string; icon: ReactNode; run: () => void }[] = [
+    { label: "Limpieza", sub: "Borra basura", tone: "pink", icon: <IconBroom />, run: () => go("cleanup") },
+    { label: "Debloat", sub: "Quita apps", tone: "purple", icon: <IconBox />, run: () => go("debloat") },
+    { label: "Optimizar", sub: "Más rendimiento", tone: "orange", icon: <IconGauge />, run: () => go("optimize") },
+    { label: "Comprimir", sub: "Ahorra espacio", tone: "blue", icon: <IconArchive />, run: () => go("cleanup") },
+    { label: ram ? "Liberando…" : "Liberar RAM", sub: "Libera memoria", tone: "green", icon: <IconSparkle />, run: freeRam },
+  ];
 
   return (
     <>
-      <PageHeader
-        title={info ? `Hola, ${info.user}` : "Inicio"}
-        subtitle={info ? `${info.os} ${info.version} · compilación ${info.build}` : "Cargando información del sistema…"}
-        actions={
-          <>
-            <Button icon={<IconRestore />} loading={rp} onClick={restore}>
-              Punto de restauración
-            </Button>
-            <Button variant="primary" icon={<IconGauge />} onClick={() => go("optimize")}>
-              Analizar PC
-            </Button>
-          </>
-        }
-      />
-
-      <div className="rings">
-        <Card>
-          <Ring value={stats?.cpu ?? null} label="CPU" sub={stats ? `${(stats.freq_mhz / 1000).toFixed(2)} GHz` : undefined} />
-        </Card>
-        <Card>
-          <Ring value={ramPct} label="RAM" sub={stats ? `${bytes(stats.ram_used)} / ${bytes(stats.ram_total)}` : undefined} />
-        </Card>
-        <Card>
-          <Ring value={stats && stats.gpu >= 0 ? stats.gpu : null} label="GPU" sub={stats && stats.gpu < 0 ? "No disponible" : "Motor 3D"} />
-        </Card>
-        <Card>
-          <div className="mini-stats">
+      <section className="hero">
+        <HeroArt />
+        <div className="hero__text">
+          <small>
+            {greeting()}
+            {info ? `, ${info.user}` : ""}
+          </small>
+          <h1>Tu PC. Optimizado.</h1>
+          <p>Limpio. Rápido. Ligero. A tu manera.</p>
+          <button className="hero__cta" onClick={() => go("optimize")}>
+            <IconWand size={17} />
+            <span>Optimización rápida</span>
+            <IconChevron size={16} />
+          </button>
+        </div>
+        <div className="hero__side">
+          <q>Un Windows más rápido y más limpio.</q>
+          <div className="hero__perks">
             <div>
-              <small>Disco</small>
-              <strong>{stats ? rate(stats.disk_read + stats.disk_write) : "—"}</strong>
+              <IconLeaf size={16} />
+              <span>Más espacio</span>
             </div>
             <div>
-              <small>Procesos</small>
-              <strong>{stats?.processes ?? "—"}</strong>
+              <IconGauge size={16} />
+              <span>Más rendimiento</span>
             </div>
             <div>
-              <small>Encendido</small>
-              <strong>{stats ? uptime(stats.uptime) : "—"}</strong>
+              <IconShield size={16} />
+              <span>Más control</span>
             </div>
           </div>
-        </Card>
+        </div>
+      </section>
+
+      <div className="stats">
+        <StatCard
+          icon={<IconCpu size={18} />}
+          label="CPU"
+          value={stats ? `${Math.round(stats.cpu)}%` : "—"}
+          sub={stats ? `${(stats.freq_mhz / 1000).toFixed(2)} GHz` : "…"}
+          ring={stats?.cpu ?? null}
+          spark={history.cpu}
+          sparkMax={100}
+          onClick={() => go("gaming")}
+        />
+        <StatCard
+          icon={<IconMemory size={18} />}
+          label="RAM"
+          value={ramPct == null ? "—" : `${Math.round(ramPct)}%`}
+          sub={stats ? `${bytes(stats.ram_used)} / ${bytes(stats.ram_total, 0)}` : "…"}
+          ring={ramPct}
+          spark={history.ram}
+          sparkMax={100}
+          tone="blue"
+          onClick={() => go("gaming")}
+        />
+        <StatCard
+          icon={<IconDisk size={18} />}
+          label={`Disco ${sysDisk?.mount.replace("\\", "") ?? ""}`}
+          value={diskPct == null ? "—" : `${Math.round(diskPct)}%`}
+          sub={sysDisk ? `${bytes(sysDisk.total - sysDisk.free)} / ${bytes(sysDisk.total)}` : "…"}
+          ring={diskPct}
+          spark={history.disk}
+          onClick={() => go("cleanup")}
+        />
+        <StatCard
+          icon={<IconGpu size={18} />}
+          label="GPU"
+          value={gpuOk ? `${Math.round(stats!.gpu)}%` : "—"}
+          sub={info?.gpus[0]?.replace(/^(NVIDIA|AMD|Intel\(R\))\s*/i, "") ?? (stats && !gpuOk ? "No disponible" : "…")}
+          ring={gpuOk ? stats!.gpu : null}
+          spark={history.gpu}
+          sparkMax={100}
+          onClick={() => go("gaming")}
+        />
       </div>
 
-      <div className="grid-2">
-        <Card title="CPU y RAM" actions={<span className="legend"><i className="lg-a" />CPU <i className="lg-b" />RAM</span>}>
-          <Area a={history.cpu} b={history.ram} max={100} height={120} />
-        </Card>
-        <Card
-          title="Red"
-          actions={
-            <span className="legend">
-              <i className="lg-a" />↓ {stats ? rate(stats.net_down) : "—"} <i className="lg-b" />↑ {stats ? rate(stats.net_up) : "—"}
-            </span>
-          }
-        >
-          <Area a={history.down} b={history.up} height={120} />
-        </Card>
-      </div>
-
-      <div className="grid-2">
-        <Card title="Equipo">
-          {info ? (
-            <dl className="specs">
-              <dt>Procesador</dt>
-              <dd>
-                {info.cpu} <small>({info.cores} núcleos / {info.threads} hilos)</small>
-              </dd>
-              <dt>Gráfica</dt>
-              <dd>{info.gpus.join(" · ") || "—"}</dd>
-              <dt>Memoria</dt>
-              <dd>
-                {bytes(info.ram_total, 0)}
-                {info.ram_speed ? ` @ ${info.ram_speed} MT/s` : ""}
-              </dd>
-              <dt>Placa base</dt>
-              <dd>{info.board || "—"}</dd>
-              <dt>Almacenamiento</dt>
-              <dd>
-                {info.drives.length ? info.drives.map((d) => <div key={d}>{d}</div>) : "—"}
-              </dd>
-              <dt>Equipo</dt>
-              <dd>
-                {info.host} {info.laptop && <small>(portátil)</small>}
-              </dd>
-            </dl>
-          ) : (
-            <div className="skeleton" style={{ height: 180 }} />
-          )}
-        </Card>
-
-        <Card title="Unidades">
-          <div className="disks">
-            {stats?.disks.map((d) => {
-              const used = d.total - d.free;
-              const p = d.total ? (used / d.total) * 100 : 0;
-              return (
-                <div key={d.mount} className="disk">
-                  <div className="disk__head">
-                    <strong>{d.mount}</strong>
-                    <span>{d.name}</span>
-                    <small>
-                      {bytes(d.free)} libres de {bytes(d.total)}
-                    </small>
-                  </div>
-                  <Bar value={p} warn={80} danger={92} />
+      <div className="home-row">
+        <section className="panel net">
+          <header className="panel__head">
+            <IconWifi size={16} />
+            <h3>Red</h3>
+          </header>
+          <div className="net__cols">
+            <div>
+              <div className="net__val">
+                <IconArrowDown size={15} className="tone-pink" />
+                <div>
+                  <strong>{stats ? rate(stats.net_down) : "—"}</strong>
+                  <small>Descarga</small>
                 </div>
-              );
-            })}
+              </div>
+              <Spark data={history.down} height={70} />
+            </div>
+            <div>
+              <div className="net__val">
+                <IconArrowUp size={15} className="tone-blue" />
+                <div>
+                  <strong>{stats ? rate(stats.net_up) : "—"}</strong>
+                  <small>Subida</small>
+                </div>
+              </div>
+              <Spark data={history.up} height={70} tone="blue" />
+            </div>
           </div>
-          <div className="quick">
-            <Button icon={<IconRocket />} loading={ram} onClick={freeRam}>
-              Liberar RAM
-            </Button>
-            <Button icon={<IconBroom />} onClick={() => go("cleanup")}>
-              Limpiar archivos
-            </Button>
+          <footer className="net__foot">
+            <div>
+              <small>Ping</small>
+              <strong>{ping?.ms != null ? `${ping.ms.toFixed(1)} ms` : "—"}</strong>
+            </div>
+            <div>
+              <small>Jitter</small>
+              <strong>{ping?.jitter != null ? `${ping.jitter.toFixed(1)} ms` : "—"}</strong>
+            </div>
+          </footer>
+        </section>
+
+        <section className="panel">
+          <header className="panel__head">
+            <IconMonitor size={16} />
+            <h3>Información del sistema</h3>
+          </header>
+          <ul className="sysinfo">
+            <li>
+              <IconMonitor size={14} />
+              <span>Sistema</span>
+              <b>{info ? `${info.os} ${info.version}` : "…"}</b>
+            </li>
+            <li>
+              <IconBox size={14} />
+              <span>Placa base</span>
+              <b>{info?.board || "—"}</b>
+            </li>
+            <li>
+              <IconCpu size={14} />
+              <span>Procesador</span>
+              <b>{info?.cpu.replace(/\s*\d+-Core Processor/i, "") ?? "…"}</b>
+            </li>
+            <li>
+              <IconGpu size={14} />
+              <span>Gráfica</span>
+              <b>{info?.gpus[0] ?? "…"}</b>
+            </li>
+            <li>
+              <IconMemory size={14} />
+              <span>Memoria</span>
+              <b>{info ? `${bytes(info.ram_total, 0)}${info.ram_speed ? ` · ${info.ram_speed} MT/s` : ""}` : "…"}</b>
+            </li>
+            <li>
+              <IconWifi size={14} />
+              <span>Compilación</span>
+              <b>{info?.build ?? "…"}</b>
+            </li>
+          </ul>
+        </section>
+
+        <section className="panel storage">
+          <header className="panel__head">
+            <IconDatabase size={16} />
+            <h3>Almacenamiento</h3>
+            <small>
+              {bytes(free)} libres de {bytes(total)}
+            </small>
+          </header>
+          <div className="storage__bar">
+            <div style={{ width: `${usedPct}%` }} />
           </div>
-        </Card>
+          <div className="storage__legend">
+            <span>
+              <i className="dot-pink" /> Usado {bytes(total - free)}
+            </span>
+            <span>
+              <i className="dot-blue" /> Libre {bytes(free)}
+            </span>
+          </div>
+          <div className="storage__disks">
+            {stats?.disks.map((d) => (
+              <div key={d.mount}>
+                <b>{d.mount.replace("\\", "")}</b>
+                <div className="storage__mini">
+                  <div style={{ width: `${d.total ? ((d.total - d.free) / d.total) * 100 : 0}%` }} />
+                </div>
+                <small>{bytes(d.free)}</small>
+              </div>
+            ))}
+          </div>
+          <button className="storage__cta" onClick={() => go("cleanup")}>
+            <span className="storage__cta-icon">
+              <IconDatabase size={16} />
+            </span>
+            <div>
+              <strong>Liberar espacio</strong>
+              <small>Busca y elimina archivos innecesarios</small>
+            </div>
+            <span className="storage__cta-go">
+              <IconChevron size={15} />
+            </span>
+          </button>
+        </section>
       </div>
+
+      <section className="panel">
+        <header className="panel__head">
+          <IconSparkle size={16} />
+          <h3>Acciones rápidas</h3>
+          <span className="panel__hint">Tareas comunes, a un clic</span>
+        </header>
+        <div className="actions">
+          {actions.map((a) => (
+            <button key={a.label} className={`action action--${a.tone}`} onClick={a.run}>
+              <span className="action__icon">{a.icon}</span>
+              <div>
+                <strong>{a.label}</strong>
+                <small>{a.sub}</small>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

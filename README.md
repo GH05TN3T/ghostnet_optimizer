@@ -1,4 +1,4 @@
-# Optimizador
+# GhostNet Optimizer
 
 Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, modo gaming con medidores en vivo, planes de energía editables y limpieza. Uso personal. Hecho con **Tauri 2 + React/TypeScript + SCSS** y un backend en Rust que ejecuta PowerShell.
 
@@ -20,7 +20,7 @@ Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, m
 
 1. Sube esta carpeta a un repositorio de GitHub (puede ser privado).
 2. Pestaña **Actions** → **Compilar instalador** → **Run workflow**.
-3. Cuando termine (~10 min la primera vez), descarga el artefacto **Optimizador-setup**: dentro está el instalador `.exe`.
+3. Cuando termine (~10 min la primera vez), descarga el artefacto **GhostNet-Optimizer-setup**: dentro está el instalador `.exe`.
 
 ## Compilar en tu PC
 

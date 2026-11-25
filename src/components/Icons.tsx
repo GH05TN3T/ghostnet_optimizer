@@ -140,3 +140,108 @@ export const IconRocket = (p: P) => (
     <circle cx="15.5" cy="8.5" r="1.3" />
   </Svg>
 );
+
+export const IconMemory = (p: P) => (
+  <Svg {...p}>
+    <rect x="3" y="7" width="18" height="10" rx="1.5" />
+    <path d="M7 10v4M11 10v4M15 10v4M6 17v2M10 17v2M14 17v2M18 17v2" />
+  </Svg>
+);
+
+export const IconDisk = (p: P) => (
+  <Svg {...p}>
+    <path d="M4 14 6.5 6h11L20 14" />
+    <rect x="3" y="14" width="18" height="5" rx="1.5" />
+    <path d="M7 16.5h.01M10 16.5h.01" />
+  </Svg>
+);
+
+export const IconGpu = (p: P) => (
+  <Svg {...p}>
+    <rect x="2" y="7" width="20" height="10" rx="1.5" />
+    <circle cx="9" cy="12" r="2.5" />
+    <circle cx="16" cy="12" r="2.5" />
+    <path d="M5 17v2M8 17v2M11 17v2" />
+  </Svg>
+);
+
+export const IconWifi = (p: P) => (
+  <Svg {...p}>
+    <path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0" />
+    <path d="M12 19.5h.01" />
+  </Svg>
+);
+
+export const IconMonitor = (p: P) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="18" height="12" rx="1.5" />
+    <path d="M8 20h8M12 16v4" />
+  </Svg>
+);
+
+export const IconDatabase = (p: P) => (
+  <Svg {...p}>
+    <ellipse cx="12" cy="5.5" rx="7.5" ry="2.5" />
+    <path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5" />
+  </Svg>
+);
+
+export const IconUser = (p: P) => (
+  <Svg {...p}>
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 21a8 8 0 0 1 16 0" />
+  </Svg>
+);
+
+export const IconChevron = (p: P) => (
+  <Svg {...p}>
+    <path d="m9 6 6 6-6 6" />
+  </Svg>
+);
+
+export const IconArrowDown = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 5v14M6 13l6 6 6-6" />
+  </Svg>
+);
+
+export const IconArrowUp = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 19V5M6 11l6-6 6 6" />
+  </Svg>
+);
+
+export const IconLeaf = (p: P) => (
+  <Svg {...p}>
+    <path d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15" />
+    <path d="M5 19 13 11" />
+  </Svg>
+);
+
+export const IconArchive = (p: P) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="18" height="5" rx="1" />
+    <path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4" />
+  </Svg>
+);
+
+export const IconSparkle = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 3c.5 4 2 5.5 6 6-4 .5-5.5 2-6 6-.5-4-2-5.5-6-6 4-.5 5.5-2 6-6Z" />
+    <path d="M19 15c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" />
+  </Svg>
+);
+
+export const IconWand = (p: P) => (
+  <Svg {...p}>
+    <path d="m4 20 11-11M14 6l1-3 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z" />
+    <path d="M18.5 13.5l.5-1.5.5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5-1.5-.5 1.5-.5Z" />
+  </Svg>
+);
+
+export const IconGhost = (p: P) => (
+  <Svg {...p}>
+    <path d="M5 20V11a7 7 0 0 1 14 0v9l-2.3-1.8L14.3 20 12 18.2 9.7 20l-2.4-1.8L5 20Z" />
+    <path d="M9.5 11h.01M14.5 11h.01" strokeWidth={2.6} />
+  </Svg>
+);

@@ -1,4 +1,5 @@
 import { useId } from "react";
+import type React from "react";
 
 /** Medidor circular. value 0-100, o null si no hay dato. */
 export function Ring({
@@ -104,5 +105,72 @@ export function Area({
       <path d={path(a)} fill="none" className="area__a area__line" />
       {b && <path d={path(b)} fill="none" className="area__b area__line" />}
     </svg>
+  );
+}
+
+/** Mini-gráfica para el pie de las tarjetas. */
+export function Spark({
+  data,
+  max,
+  tone = "pink",
+  height = 34,
+}: {
+  data: number[];
+  max?: number;
+  tone?: "pink" | "blue" | "green";
+  height?: number;
+}) {
+  const id = useId().replace(/:/g, "");
+  // Se estira a todo el ancho desde el primer segundo (no espera a tener 60 muestras).
+  const points = Math.max(data.length, 2);
+  const w = 300;
+  const h = height;
+  const top = Math.max(max ?? 0, ...data, 1);
+  const step = w / (points - 1);
+  const off = (points - data.length) * step;
+  const pts = data.map((v, i) => [off + i * step, h - 2 - (v / top) * (h - 6)] as const);
+  const line = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  const fill = pts.length > 1 ? `${line} L${w},${h} L${off.toFixed(1)},${h} Z` : "";
+  return (
+    <svg className={`spark spark--${tone}`} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ height }}>
+      <defs>
+        <linearGradient id={`s${id}`} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {pts.length > 1 && (
+        <>
+          <path d={fill} fill={`url(#s${id})`} />
+          <path d={line} fill="none" stroke="currentColor" strokeWidth={1.6} vectorEffect="non-scaling-stroke" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+/** Anillo pequeño con un icono dentro (cabecera de las tarjetas de uso). */
+export function RingIcon({ value, children, size = 52 }: { value: number | null; children: React.ReactNode; size?: number }) {
+  const stroke = 3.5;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const v = value == null ? 0 : Math.max(0, Math.min(100, value));
+  return (
+    <div className="ring-icon" style={{ width: size, height: size }}>
+      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" className="ring-icon__track" strokeWidth={stroke} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          className="ring-icon__value"
+          strokeWidth={stroke}
+          strokeDasharray={`${(c * v) / 100} ${c}`}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="ring-icon__inner">{children}</div>
+    </div>
   );
 }

@@ -6,12 +6,15 @@ import {
   IconBroom,
   IconGamepad,
   IconGauge,
+  IconGhost,
   IconHome,
+  IconRestore,
   IconSearch,
+  IconShield,
   IconSliders,
 } from "./components/Icons";
-import { inTauri } from "./lib/api";
-import { useStats } from "./lib/store";
+import { api, errMsg, inTauri } from "./lib/api";
+import { useStats, useToast } from "./lib/store";
 import Home from "./pages/Home";
 import Optimize from "./pages/Optimize";
 import Tweaks from "./pages/Tweaks";
@@ -37,6 +40,20 @@ export default function App() {
   const [focus, setFocus] = useState<string | undefined>();
   const [palette, setPalette] = useState(false);
   const { info } = useStats();
+  const toast = useToast();
+  const [rp, setRp] = useState(false);
+
+  const restorePoint = async () => {
+    setRp(true);
+    try {
+      await api.createRestorePoint();
+      toast("Punto de restauración creado");
+    } catch (e) {
+      toast(errMsg(e), "error");
+    } finally {
+      setRp(false);
+    }
+  };
 
   const go = useCallback((p: PageId, f?: string) => {
     setPage(p);
@@ -59,19 +76,13 @@ export default function App() {
       <aside className="sidebar">
         <div className="brand">
           <div className="brand__logo">
-            <IconGauge size={20} />
+            <IconGhost size={22} />
           </div>
           <div>
-            <strong>Optimizador</strong>
-            <small>Windows 10 / 11</small>
+            <strong>GhostNet</strong>
+            <small>Optimizer</small>
           </div>
         </div>
-
-        <button className="search-btn" onClick={() => setPalette(true)}>
-          <IconSearch size={16} />
-          <span>Buscar</span>
-          <kbd>Ctrl K</kbd>
-        </button>
 
         <nav>
           {PAGES.map((p) => (
@@ -93,6 +104,30 @@ export default function App() {
       </aside>
 
       <main className="main">
+        <header className="topbar">
+          <div className="topbar__user">
+            <div className="avatar">{info?.user?.[0]?.toUpperCase() ?? "?"}</div>
+            {info && (
+              <div>
+                <strong>{info.user}</strong>
+                <small>{info.host}</small>
+              </div>
+            )}
+          </div>
+          <div className="topbar__pill">
+            <button className="search-btn" onClick={() => setPalette(true)}>
+              <IconSearch size={15} />
+              <span>Buscar</span>
+              <kbd>Ctrl K</kbd>
+            </button>
+            <button className="pill-btn" title="Crear punto de restauración" disabled={rp} onClick={restorePoint}>
+              {rp ? <span className="spinner spinner--sm" /> : <IconShield size={17} />}
+            </button>
+            <button className="pill-btn" title="Abrir Restaurar sistema" onClick={() => api.openRestoreUi().catch((e) => toast(errMsg(e), "error"))}>
+              <IconRestore size={17} />
+            </button>
+          </div>
+        </header>
         {!inTauri && (
           <div className="banner banner--warn">
             Estás viendo la interfaz en el navegador. Para que funcione de verdad, ábrela con <code>npm run app:dev</code> en Windows.

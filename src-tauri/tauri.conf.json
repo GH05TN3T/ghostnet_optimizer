@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Optimizador",
+  "productName": "GhostNet Optimizer",
   "version": "1.0.0",
-  "identifier": "com.zykos.optimizador",
+  "identifier": "com.ghostnet.optimizer",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -13,13 +13,13 @@
     "windows": [
       {
         "label": "main",
-        "title": "Optimizador",
+        "title": "GhostNet Optimizer",
         "width": 1240,
         "height": 800,
         "minWidth": 1040,
         "minHeight": 660,
         "theme": "Dark",
-        "backgroundColor": "#08080a",
+        "backgroundColor": "#0a0a0f",
         "center": true
       }
     ],
@@ -29,7 +29,9 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": [
+      "nsis"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

@@ -153,7 +153,7 @@ impl Monitor {
         const CRITICAL: &[&str] = &[
             "system", "registry", "smss.exe", "csrss.exe", "wininit.exe", "winlogon.exe", "services.exe",
             "lsass.exe", "svchost.exe", "dwm.exe", "fontdrvhost.exe", "memcompression", "secure system",
-            "lsaiso.exe", "audiodg.exe", "optimizador.exe", "msmpeng.exe",
+            "lsaiso.exe", "audiodg.exe", "optimizador.exe", "ghostnet optimizer.exe", "msmpeng.exe",
         ];
         if CRITICAL.iter().any(|c| c.eq_ignore_ascii_case(name)) {
             return Err(format!("{name} es un proceso crítico de Windows y no se puede cerrar."));
@@ -333,4 +333,35 @@ pub fn open_restore_ui() -> Result<(), String> {
 pub fn restart_explorer() -> Result<(), String> {
     ps::run("Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 1500; if (-not (Get-Process explorer -ErrorAction SilentlyContinue)) { Start-Process explorer.exe }")
         .map(|_| ())
+}
+
+#[derive(Serialize)]
+pub struct Ping {
+    /// Media en ms (None si no hay conexión).
+    pub ms: Option<f64>,
+    pub jitter: Option<f64>,
+}
+
+/// Latencia aproximada: tiempo de conexión TCP a servidores DNS públicos (no necesita ICMP ni admin).
+pub fn ping() -> Ping {
+    use std::net::{SocketAddr, TcpStream};
+    use std::time::Duration;
+    let targets: [SocketAddr; 2] = [([1, 1, 1, 1], 443).into(), ([8, 8, 8, 8], 443).into()];
+    let mut samples = Vec::new();
+    for target in targets.iter().cycle().take(4) {
+        let start = Instant::now();
+        if TcpStream::connect_timeout(target, Duration::from_millis(1500)).is_ok() {
+            samples.push(start.elapsed().as_secs_f64() * 1000.0);
+        }
+    }
+    if samples.is_empty() {
+        return Ping { ms: None, jitter: None };
+    }
+    let avg = samples.iter().sum::<f64>() / samples.len() as f64;
+    let jitter = if samples.len() > 1 {
+        samples.windows(2).map(|w| (w[1] - w[0]).abs()).sum::<f64>() / (samples.len() - 1) as f64
+    } else {
+        0.0
+    };
+    Ping { ms: Some(avg), jitter: Some(jitter) }
 }

@@ -40,13 +40,18 @@ fn kill_process(name: String, mon: State<'_, Mutex<system::Monitor>>) -> R<usize
 }
 
 #[tauri::command]
+async fn ping() -> R<system::Ping> {
+    blocking(|| Ok(system::ping())).await
+}
+
+#[tauri::command]
 async fn clean_ram() -> R<i64> {
     blocking(system::clean_ram).await
 }
 
 #[tauri::command]
 async fn create_restore_point() -> R<()> {
-    blocking(|| system::create_restore_point("Optimizador")).await
+    blocking(|| system::create_restore_point("GhostNet Optimizer")).await
 }
 
 #[tauri::command]
@@ -179,6 +184,7 @@ fn main() {
             system_info,
             live_stats,
             kill_process,
+            ping,
             clean_ram,
             create_restore_point,
             open_restore_ui,
