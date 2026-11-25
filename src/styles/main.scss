@@ -82,17 +82,14 @@ code {
   border-radius: 4px;
 }
 
+// Scroll sin barras visibles (la rueda, el touchpad y el teclado siguen funcionando).
+* {
+  scrollbar-width: none;
+}
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  border: 3px solid $bg;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .muted {
@@ -3345,4 +3342,26 @@ select option {
   .phero__side {
     display: none;
   }
+}
+
+
+/* ---------- Ventana sin marco ---------- */
+
+.app {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  &.is-max {
+    border-color: transparent;
+  }
+}
+
+.pill-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 2px;
+  background: $line-2;
+}
+
+.pill-btn--close:hover:not(:disabled) {
+  background: rgba($danger, 0.18) !important;
+  color: $danger !important;
 }

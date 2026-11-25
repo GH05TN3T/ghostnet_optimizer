@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { CommandPalette } from "./components/CommandPalette";
 import logo from "./assets/logo.png";
 import {
@@ -8,7 +9,11 @@ import {
   IconGamepad,
   IconGrid,
   IconHome,
+  IconMaximize,
+  IconMinimize,
+  IconPower,
   IconRestore,
+  IconRestoreWin,
   IconSearch,
   IconShield,
   IconSliders,
@@ -48,6 +53,37 @@ export default function App() {
   const { info } = useStats();
   const toast = useToast();
   const [rp, setRp] = useState(false);
+  const [maximized, setMaximized] = useState(false);
+
+  // Ventana sin marco: controles propios de minimizar / maximizar / cerrar.
+  useEffect(() => {
+    if (!inTauri) return;
+    let off: (() => void) | undefined;
+    try {
+      const win = getCurrentWindow();
+      const sync = () => win.isMaximized().then(setMaximized).catch(() => {});
+      sync();
+      win
+        .onResized(sync)
+        .then((u) => (off = u))
+        .catch(() => {});
+    } catch {
+      /* sin API de ventana */
+    }
+    return () => off?.();
+  }, []);
+
+  const winAction = (a: "min" | "max" | "close") => {
+    if (!inTauri) return;
+    let win;
+    try {
+      win = getCurrentWindow();
+    } catch (e) {
+      toast(errMsg(e), "error");
+      return;
+    }
+    (a === "min" ? win.minimize() : a === "max" ? win.toggleMaximize() : win.close()).catch((e) => toast(errMsg(e), "error"));
+  };
 
   const restorePoint = async () => {
     setRp(true);
@@ -78,11 +114,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
+    <div className={`app ${maximized ? "is-max" : ""}`}>
       <aside className="sidebar">
-        <div className="brand">
-          <img className="brand__img" src={logo} alt="GhostNet" />
-          <div>
+        <div className="brand" data-tauri-drag-region>
+          <img className="brand__img" src={logo} alt="GhostNet" draggable={false} data-tauri-drag-region />
+          <div data-tauri-drag-region>
             <strong>GhostNet</strong>
             <small>Optimizer</small>
           </div>
@@ -108,11 +144,11 @@ export default function App() {
       </aside>
 
       <main className="main">
-        <header className="topbar">
-          <div className="topbar__user">
+        <header className="topbar" data-tauri-drag-region>
+          <div className="topbar__user" data-tauri-drag-region>
             <div className="avatar">{info?.user?.[0]?.toUpperCase() ?? "?"}</div>
             {info && (
-              <div>
+              <div data-tauri-drag-region>
                 <strong>{info.user}</strong>
                 <small>{info.host}</small>
               </div>
@@ -129,6 +165,16 @@ export default function App() {
             </button>
             <button className="pill-btn" title="Abrir Restaurar sistema" onClick={() => api.openRestoreUi().catch((e) => toast(errMsg(e), "error"))}>
               <IconRestore size={17} />
+            </button>
+            <span className="pill-sep" />
+            <button className="pill-btn" title="Minimizar" onClick={() => winAction("min")}>
+              <IconMinimize size={17} />
+            </button>
+            <button className="pill-btn" title={maximized ? "Restaurar tamaño" : "Maximizar"} onClick={() => winAction("max")}>
+              {maximized ? <IconRestoreWin size={16} /> : <IconMaximize size={15} />}
+            </button>
+            <button className="pill-btn pill-btn--close" title="Cerrar" onClick={() => winAction("close")}>
+              <IconPower size={17} />
             </button>
           </div>
         </header>

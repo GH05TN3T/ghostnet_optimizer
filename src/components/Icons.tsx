@@ -325,3 +325,29 @@ export const IconFps = (p: P) => (
     <path d="M12 7v5l3 2" />
   </Svg>
 );
+
+export const IconMinimize = (p: P) => (
+  <Svg {...p}>
+    <path d="M5 12h14" />
+  </Svg>
+);
+
+export const IconMaximize = (p: P) => (
+  <Svg {...p}>
+    <rect x="5" y="5" width="14" height="14" rx="2.5" />
+  </Svg>
+);
+
+export const IconRestoreWin = (p: P) => (
+  <Svg {...p}>
+    <rect x="4" y="8" width="12" height="12" rx="2.5" />
+    <path d="M8 8V6.5A2.5 2.5 0 0 1 10.5 4H17.5A2.5 2.5 0 0 1 20 6.5V13.5A2.5 2.5 0 0 1 17.5 16H16" />
+  </Svg>
+);
+
+export const IconPower = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 3v8" />
+    <path d="M6.3 6.8a8 8 0 1 0 11.4 0" />
+  </Svg>
+);
