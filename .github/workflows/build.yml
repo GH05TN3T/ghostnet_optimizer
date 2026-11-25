@@ -80,9 +80,17 @@ jobs:
               platforms: { "windows-x86_64": { signature: fs.readFileSync(process.env.SIG, "utf8").trim(), url: process.env.URL } }
             }, null, 2));'
           cat latest.json
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$NAME" latest.json --clobber
-          else
-            gh release create "$TAG" "$NAME" latest.json --target "$GITHUB_SHA" \
-              --title "GhostNet Optimizer $TAG" --notes "$NOTES"
-          fi
+          publish() {
+            if gh release view "$TAG" >/dev/null 2>&1; then
+              gh release upload "$TAG" "$NAME" latest.json --clobber
+            else
+              gh release create "$TAG" "$NAME" latest.json --target "$GITHUB_SHA" \
+                --title "GhostNet Optimizer $TAG" --notes "$NOTES"
+            fi
+          }
+          # GitHub a veces responde 503 un momento: hasta 4 intentos.
+          for i in 1 2 3 4; do
+            if publish; then exit 0; fi
+            echo "Intento $i falló, reintentando en 20 s..."; sleep 20
+          done
+          exit 1
