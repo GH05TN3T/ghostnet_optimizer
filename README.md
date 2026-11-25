@@ -24,6 +24,23 @@ Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, m
 2. Pestaña **Actions** → **Compilar instalador** → **Run workflow**.
 3. Cuando termine (~10 min la primera vez), descarga el artefacto **GhostNet-Optimizer-setup** (abajo del todo de la página de la compilación): es un zip con el instalador `.exe` dentro.
 
+## Actualizaciones automáticas
+
+La app busca actualizaciones al abrirse (y con el botón de versión, abajo en el menú). Las descarga de **GitHub Releases** y comprueba la firma con la clave pública de `src-tauri/tauri.conf.json` antes de instalar nada.
+
+Configuración (una sola vez): en el repo, **Settings → Secrets and variables → Actions → New repository secret**, crea:
+
+- `TAURI_SIGNING_PRIVATE_KEY`: el contenido de la clave privada de firma.
+- `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: su contraseña.
+
+Para publicar una actualización:
+
+1. Sube la versión en `src-tauri/tauri.conf.json` (por ejemplo `1.1.0` → `1.2.0`).
+2. Lanza **Actions → Compilar instalador**.
+3. El workflow crea el Release `v1.2.0` con el instalador firmado y `latest.json`. Las apps instaladas lo detectan solas.
+
+Si pierdes la clave privada, las apps ya instaladas no aceptarán actualizaciones nuevas: guárdala bien.
+
 ## Compilar en tu PC
 
 Requisitos (una sola vez):

@@ -1,6 +1,11 @@
-# Compila el instalador de Windows (.exe) en GitHub sin tener que instalar Rust en tu PC.
-# Súbelo a un repo, ve a Actions -> "Compilar instalador" -> Run workflow,
-# y descarga el artefacto "Optimizador-setup" cuando termine (~10 min la primera vez).
+# Compila el instalador de Windows y publica la versión para el actualizador automático.
+#
+# - Actions -> "Compilar instalador" -> Run workflow (o push de un tag v*).
+# - El instalador queda como artefacto "GhostNet-Optimizer-setup".
+# - Si existen los secretos TAURI_SIGNING_PRIVATE_KEY y TAURI_SIGNING_PRIVATE_KEY_PASSWORD,
+#   además se publica (o actualiza) el Release v<versión> con el .exe firmado y latest.json,
+#   que es lo que lee la app instalada para actualizarse sola.
+#   Para sacar una actualización: sube la versión en src-tauri/tauri.conf.json y compila.
 name: Compilar instalador
 
 on:
@@ -8,9 +13,14 @@ on:
   push:
     tags: ["v*"]
 
+permissions:
+  contents: write
+
 jobs:
   windows:
     runs-on: windows-latest
+    env:
+      HAS_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v7
 
@@ -27,9 +37,52 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run tauri build
+      - name: Compilar
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          if [ "$HAS_KEY" = "true" ]; then
+            npm run tauri build
+          else
+            echo "::warning::Falta el secreto TAURI_SIGNING_PRIVATE_KEY: se compila sin firma de actualizaciones y no se publica Release."
+            npm run tauri build -- --config '{"bundle":{"createUpdaterArtifacts":false}}'
+          fi
 
       - uses: actions/upload-artifact@v7
         with:
           name: GhostNet-Optimizer-setup
           path: src-tauri/target/release/bundle/nsis/*.exe
+
+      # Publica el .exe firmado y latest.json en Releases (de ahí se actualiza la app).
+      - name: Publicar Release
+        if: env.HAS_KEY == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          export VERSION=$(node -p "require('./src-tauri/tauri.conf.json').version")
+          TAG="v$VERSION"
+          DIR=src-tauri/target/release/bundle/nsis
+          EXE=$(ls "$DIR"/*-setup.exe | head -n 1)
+          export SIG="$EXE.sig"
+          NAME="GhostNet-Optimizer_${VERSION}_x64-setup.exe"
+          cp "$EXE" "$NAME"
+          export URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}"
+          export NOTES="$(git log -1 --pretty=%s)"
+          node -e '
+            const fs = require("fs");
+            fs.writeFileSync("latest.json", JSON.stringify({
+              version: process.env.VERSION,
+              notes: process.env.NOTES,
+              pub_date: new Date().toISOString(),
+              platforms: { "windows-x86_64": { signature: fs.readFileSync(process.env.SIG, "utf8").trim(), url: process.env.URL } }
+            }, null, 2));'
+          cat latest.json
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$NAME" latest.json --clobber
+          else
+            gh release create "$TAG" "$NAME" latest.json --target "$GITHUB_SHA" \
+              --title "GhostNet Optimizer $TAG" --notes "$NOTES"
+          fi

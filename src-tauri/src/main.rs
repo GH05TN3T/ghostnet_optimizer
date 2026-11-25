@@ -220,6 +220,8 @@ async fn startup_set(id: String, enabled: bool) -> R<()> {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .manage(Mutex::new(system::Monitor::new()))
         .invoke_handler(tauri::generate_handler![
             system_info,

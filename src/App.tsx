@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { CommandPalette } from "./components/CommandPalette";
+import { UpdateBanner, useUpdater } from "./components/Updater";
 import logo from "./assets/logo.png";
 import {
   IconArchive,
@@ -54,6 +55,7 @@ export default function App() {
   const toast = useToast();
   const [rp, setRp] = useState(false);
   const [maximized, setMaximized] = useState(false);
+  const updater = useUpdater();
 
   // Ventana sin marco: controles propios de minimizar / maximizar / cerrar.
   useEffect(() => {
@@ -135,11 +137,19 @@ export default function App() {
 
         <div className="sidebar__foot">
           {info && (
-            <>
+            <div className="sidebar__admin">
               <span className={`dot ${info.is_admin ? "dot--ok" : "dot--warn"}`} />
               <span>{info.is_admin ? "Administrador" : "Sin permisos de admin"}</span>
-            </>
+            </div>
           )}
+          <button className="version-btn" onClick={updater.check} disabled={updater.phase === "checking"} title="Buscar actualizaciones">
+            <span>v{updater.version || "—"}</span>
+            {updater.update ? (
+              <span className="version-btn__new">Nueva {updater.update.version}</span>
+            ) : (
+              <span>{updater.phase === "checking" ? "Buscando…" : "Buscar actualizaciones"}</span>
+            )}
+          </button>
         </div>
       </aside>
 
@@ -189,6 +199,7 @@ export default function App() {
             (o usa el instalador, que lo pide solo).
           </div>
         )}
+        <UpdateBanner u={updater} />
         <div className="page" key={page}>
           {page === "home" && <Home go={go} />}
           {page === "optimize" && <Optimize go={go} />}

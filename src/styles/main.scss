@@ -3365,3 +3365,90 @@ select option {
   background: rgba($danger, 0.18) !important;
   color: $danger !important;
 }
+
+
+/* ---------- Actualizador ---------- */
+
+.sidebar__foot {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.sidebar__admin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.version-btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid $line;
+  background: rgba(255, 255, 255, 0.025);
+  color: $muted;
+  font-size: 11.5px;
+  cursor: pointer;
+  &:hover:not(:disabled) {
+    border-color: rgba($accent, 0.4);
+    color: $text;
+  }
+  &__new {
+    color: $accent;
+    font-weight: 700;
+  }
+}
+
+.update {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1320px;
+  margin: 0 auto 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba($accent, 0.4);
+  background: linear-gradient(90deg, rgba($accent, 0.16), rgba($accent, 0.04)), $panel;
+  animation: fade 0.25s ease;
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: $accent-grad;
+    color: $white;
+    flex: none;
+  }
+  &__text {
+    flex: 1;
+    min-width: 0;
+    strong {
+      display: block;
+      font-size: 13.5px;
+    }
+    small {
+      color: #c9c9d0;
+      font-size: 12px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &__bar {
+    height: 4px;
+    margin-top: 6px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    div {
+      height: 100%;
+      background: $accent-grad;
+      transition: width 0.2s;
+    }
+  }
+}
