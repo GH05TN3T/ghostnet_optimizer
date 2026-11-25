@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { CommandPalette } from "./components/CommandPalette";
 import { UpdateBanner, useUpdater } from "./components/Updater";
+import { ThemePicker } from "./components/ThemePicker";
 import logo from "./assets/logo.png";
 import {
   IconArchive,
@@ -176,6 +177,7 @@ export default function App() {
               <span>Buscar</span>
               <kbd>Ctrl K</kbd>
             </button>
+            <ThemePicker />
             <button className="pill-btn" title="Crear punto de restauración" disabled={rp} onClick={restorePoint}>
               {rp ? <span className="spinner spinner--sm" /> : <IconShield size={17} />}
             </button>

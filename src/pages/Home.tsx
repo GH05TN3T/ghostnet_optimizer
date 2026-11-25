@@ -39,41 +39,41 @@ function HeroArt() {
       <defs>
         <linearGradient id="hbg" x1="0" x2="1" y1="0" y2="0">
           <stop offset="0" stopColor="#14111a" stopOpacity="0" />
-          <stop offset="0.45" stopColor="#3a0f2a" stopOpacity="0.55" />
-          <stop offset="1" stopColor="#5a1238" stopOpacity="0.95" />
+          <stop offset="0.45" stopOpacity="0.55" style={{ stopColor: "var(--accent-deep)" }} />
+          <stop offset="1" stopOpacity="0.95" style={{ stopColor: "var(--accent-deep)" }} />
         </linearGradient>
         <linearGradient id="hw1" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#ff4f8b" stopOpacity="0.9" />
-          <stop offset="1" stopColor="#7a1450" stopOpacity="0.2" />
+          <stop offset="0" stopOpacity="0.9" style={{ stopColor: "var(--accent-hi)" }} />
+          <stop offset="1" stopOpacity="0.2" style={{ stopColor: "var(--accent-2)" }} />
         </linearGradient>
         <linearGradient id="hw2" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#b41f6a" stopOpacity="0.1" />
-          <stop offset="0.6" stopColor="#e8336d" stopOpacity="0.55" />
-          <stop offset="1" stopColor="#ff86b0" stopOpacity="0.35" />
+          <stop offset="0" stopOpacity="0.1" style={{ stopColor: "var(--accent-2)" }} />
+          <stop offset="0.6" stopOpacity="0.55" style={{ stopColor: "var(--accent)" }} />
+          <stop offset="1" stopOpacity="0.35" style={{ stopColor: "var(--accent-hi)" }} />
         </linearGradient>
         <linearGradient id="hw3" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#3b0a2a" stopOpacity="0" />
-          <stop offset="1" stopColor="#2a0820" stopOpacity="0.95" />
+          <stop offset="0" stopOpacity="0" style={{ stopColor: "var(--accent-deep)" }} />
+          <stop offset="1" stopOpacity="0.95" style={{ stopColor: "var(--accent-deep)" }} />
         </linearGradient>
         <radialGradient id="hb" cx="0.35" cy="0.3" r="0.75">
           <stop offset="0" stopColor="#ffffff" stopOpacity="0.85" />
-          <stop offset="0.25" stopColor="#ffc2d8" stopOpacity="0.35" />
-          <stop offset="1" stopColor="#e8336d" stopOpacity="0.05" />
+          <stop offset="0.25" stopOpacity="0.35" style={{ stopColor: "var(--accent-soft)" }} />
+          <stop offset="1" stopOpacity="0.05" style={{ stopColor: "var(--accent)" }} />
         </radialGradient>
         <filter id="hblur" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="18" />
         </filter>
       </defs>
       <rect width="1000" height="220" fill="url(#hbg)" />
-      <ellipse cx="760" cy="200" rx="260" ry="70" fill="#e8336d" opacity="0.35" filter="url(#hblur)" />
+      <ellipse cx="760" cy="200" rx="260" ry="70" opacity="0.35" filter="url(#hblur)" style={{ fill: "var(--accent)" }} />
       <path d="M380 220 C 520 150, 600 120, 700 130 S 880 90, 1000 60 L1000 220 Z" fill="url(#hw2)" />
       <path d="M440 220 C 560 170, 650 175, 740 150 S 900 120, 1000 125 L1000 220 Z" fill="url(#hw1)" opacity="0.75" />
       <path d="M520 220 C 640 195, 720 200, 820 180 S 950 170, 1000 175 L1000 220 Z" fill="url(#hw3)" />
-      <path d="M380 220 C 520 150, 600 120, 700 130 S 880 90, 1000 60" fill="none" stroke="#ffb3cd" strokeOpacity="0.35" />
-      <circle cx="640" cy="92" r="26" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.35" />
-      <circle cx="585" cy="48" r="8" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.3" />
-      <circle cx="560" cy="168" r="11" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.3" />
-      <circle cx="505" cy="62" r="5" fill="url(#hb)" stroke="#ffd1e1" strokeOpacity="0.25" />
+      <path d="M380 220 C 520 150, 600 120, 700 130 S 880 90, 1000 60" fill="none" strokeOpacity="0.35" style={{ stroke: "var(--accent-soft)" }} />
+      <circle cx="640" cy="92" r="26" fill="url(#hb)" strokeOpacity="0.35" style={{ stroke: "var(--accent-soft)" }} />
+      <circle cx="585" cy="48" r="8" fill="url(#hb)" strokeOpacity="0.3" style={{ stroke: "var(--accent-soft)" }} />
+      <circle cx="560" cy="168" r="11" fill="url(#hb)" strokeOpacity="0.3" style={{ stroke: "var(--accent-soft)" }} />
+      <circle cx="505" cy="62" r="5" fill="url(#hb)" strokeOpacity="0.25" style={{ stroke: "var(--accent-soft)" }} />
       {[
         [540, 110],
         [690, 75],

@@ -6,6 +6,7 @@ mod bloat;
 mod builder;
 mod cleanup;
 mod games;
+mod isodl;
 mod power;
 mod ps;
 mod startup;
@@ -208,6 +209,21 @@ fn builder_running() -> bool {
 }
 
 #[tauri::command]
+async fn iso_languages() -> R<isodl::Languages> {
+    blocking(isodl::languages).await
+}
+
+#[tauri::command]
+fn iso_download(app: tauri::AppHandle, sku: String, session: String, dir: String) -> R<()> {
+    isodl::start(app, sku, session, dir)
+}
+
+#[tauri::command]
+async fn iso_download_cancel() -> R<()> {
+    blocking(isodl::cancel).await
+}
+
+#[tauri::command]
 fn reveal_file(path: String) -> R<()> {
     builder::reveal(&path)
 }
@@ -295,6 +311,9 @@ fn main() {
             builder_cancel,
             builder_running,
             reveal_file,
+            iso_languages,
+            iso_download,
+            iso_download_cancel,
             open_iso_download,
             scan_junk,
             clean_junk,

@@ -202,6 +202,9 @@ export const api = {
   builderHash: (iso: string) => call<string>("builder_hash", { iso }),
   builderStart: (options: BuildOptions) => call<void>("builder_start", { options }),
   builderCancel: (out: string, iso: string) => call<void>("builder_cancel", { out, iso }),
+  isoLanguages: () => call<{ session: string; languages: { id: string; name: string; display: string }[] }>("iso_languages"),
+  isoDownload: (sku: string, session: string, dir: string) => call<void>("iso_download", { sku, session, dir }),
+  isoDownloadCancel: () => call<void>("iso_download_cancel"),
   revealFile: (path: string) => call<void>("reveal_file", { path }),
   openIsoDownload: () => call<void>("open_iso_download"),
 

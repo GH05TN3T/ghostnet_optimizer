@@ -8,15 +8,26 @@ $line-2: rgba(255, 255, 255, 0.12);
 $text: #f2f2f3;
 $muted: #8d8d96;
 $dim: #5c5c64;
-$white: #ffffff;
+$white: var(--on-accent);
 $ok: #4ade80;
 $warn: #fbbf24;
 $danger: #f87171;
 $radius: 14px;
-$accent: #e8336d;
-$accent-2: #b8195a;
-$accent-grad: linear-gradient(90deg, #ef3f77, #b8195a);
+$accent: var(--accent);
+$accent-2: var(--accent-2);
+$accent-grad: linear-gradient(90deg, var(--accent-hi), var(--accent-2));
 $blue: #38bdf8;
+
+:root {
+  /* Tema (lo cambia la app en tiempo de ejecución: lib/theme.ts) */
+  --accent-rgb: 232 51 109;
+  --accent: rgb(var(--accent-rgb));
+  --accent-hi: #ef3f77;
+  --accent-2: #b8195a;
+  --accent-soft: #ff8fb4;
+  --accent-deep: #4d1030;
+  --on-accent: #ffffff;
+}
 
 *,
 *::before,
@@ -123,7 +134,7 @@ code {
   width: 44px;
   height: 44px;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba($accent, 0.35));
+  filter: drop-shadow(0 0 10px rgb(var(--accent-rgb) / 0.35));
 }
 
 .brand {
@@ -140,7 +151,7 @@ code {
     border-radius: 11px;
     background: $accent-grad;
     color: $white;
-    box-shadow: 0 6px 18px rgba($accent, 0.35);
+    box-shadow: 0 6px 18px rgb(var(--accent-rgb) / 0.35);
   }
   strong {
     display: block;
@@ -201,7 +212,7 @@ nav {
     background: $accent-grad;
     color: $white;
     font-weight: 600;
-    box-shadow: 0 6px 20px rgba($accent, 0.3);
+    box-shadow: 0 6px 20px rgb(var(--accent-rgb) / 0.3);
   }
 }
 
@@ -357,9 +368,9 @@ nav {
     color: $white;
     border-color: transparent;
     font-weight: 600;
-    box-shadow: 0 6px 18px rgba($accent, 0.25);
+    box-shadow: 0 6px 18px rgb(var(--accent-rgb) / 0.25);
     &:hover:not(:disabled) {
-      background: linear-gradient(90deg, #f5528a, #c81f66);
+      background: linear-gradient(90deg, var(--accent-hi), var(--accent));
       border-color: transparent;
     }
     .spinner {
@@ -414,7 +425,7 @@ nav {
   height: 15px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: $white;
+  border-top-color: #ffffff;
   animation: spin 0.7s linear infinite;
   &--sm {
     width: 12px;
@@ -453,7 +464,7 @@ nav {
   &.is-on {
     background: $accent-grad;
     border-color: transparent;
-    box-shadow: 0 0 12px rgba($accent, 0.35);
+    box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.35);
     .toggle__knob {
       transform: translateX(18px);
       background: $white;
@@ -944,7 +955,7 @@ select option {
   .ring__text strong {
     font-size: 44px;
   }
-  background: radial-gradient(circle at 50% 30%, rgba($accent, 0.12), transparent 65%), $panel;
+  background: radial-gradient(circle at 50% 30%, rgb(var(--accent-rgb) / 0.12), transparent 65%), $panel;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1130,8 +1141,8 @@ select option {
     border-color: $line-2;
   }
   &.is-highlight {
-    border-color: rgba($accent, 0.7);
-    box-shadow: 0 0 0 3px rgba($accent, 0.12);
+    border-color: rgb(var(--accent-rgb) / 0.7);
+    box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.12);
   }
   &__text {
     flex: 1;
@@ -1228,7 +1239,7 @@ select option {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(0deg, $accent-2, #ff5b93);
+    background: linear-gradient(0deg, $accent-2, var(--accent-hi));
     border-radius: 5px;
     transition: height 0.5s ease;
   }
@@ -1307,7 +1318,7 @@ select option {
     border-color: rgba($ok, 0.35);
   }
   &.is-sel {
-    box-shadow: 0 0 0 1px rgba($accent, 0.7);
+    box-shadow: 0 0 0 1px rgb(var(--accent-rgb) / 0.7);
   }
 }
 
@@ -1354,7 +1365,7 @@ select option {
       font-size: 12.5px;
     }
     &.is-sel {
-      border-color: rgba($accent, 0.35);
+      border-color: rgb(var(--accent-rgb) / 0.35);
     }
   }
   &__size {
@@ -1504,7 +1515,7 @@ select option {
   padding: 26px 30px;
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba($accent, 0.18);
+  border: 1px solid rgb(var(--accent-rgb) / 0.18);
   background: #14111a;
 
   &__art {
@@ -1547,14 +1558,14 @@ select option {
     color: $white;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 8px 26px rgba($accent, 0.45);
+    box-shadow: 0 8px 26px rgb(var(--accent-rgb) / 0.45);
     transition: transform 0.15s, box-shadow 0.15s;
     span {
       margin-right: 18px;
     }
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 30px rgba($accent, 0.6);
+      box-shadow: 0 10px 30px rgb(var(--accent-rgb) / 0.6);
     }
   }
   &__side {
@@ -1602,7 +1613,7 @@ select option {
   overflow: hidden;
   transition: border-color 0.15s, transform 0.15s;
   &:hover {
-    border-color: rgba($accent, 0.35);
+    border-color: rgb(var(--accent-rgb) / 0.35);
     transform: translateY(-1px);
   }
   &__top {
@@ -1648,12 +1659,12 @@ select option {
   position: relative;
   flex: none;
   &__track {
-    stroke: rgba($accent, 0.15);
+    stroke: rgb(var(--accent-rgb) / 0.15);
   }
   &__value {
     stroke: $accent;
     transition: stroke-dasharray 0.5s ease;
-    filter: drop-shadow(0 0 4px rgba($accent, 0.6));
+    filter: drop-shadow(0 0 4px rgb(var(--accent-rgb) / 0.6));
   }
   &__inner {
     position: absolute;
@@ -1823,7 +1834,7 @@ select option {
       height: 100%;
       border-radius: 99px;
       background: $accent-grad;
-      box-shadow: 0 0 10px rgba($accent, 0.5);
+      box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.5);
       transition: width 0.4s ease;
     }
   }
@@ -1872,7 +1883,7 @@ select option {
     overflow: hidden;
     div {
       height: 100%;
-      background: rgba($accent, 0.8);
+      background: rgb(var(--accent-rgb) / 0.8);
     }
   }
   &__cta {
@@ -1898,7 +1909,7 @@ select option {
       font-size: 11.5px;
     }
     &:hover {
-      border-color: rgba($accent, 0.35);
+      border-color: rgb(var(--accent-rgb) / 0.35);
     }
   }
   &__cta-icon {
@@ -1907,7 +1918,7 @@ select option {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: rgba($accent, 0.14);
+    background: rgb(var(--accent-rgb) / 0.14);
     color: $accent;
   }
   &__cta-go {
@@ -2008,7 +2019,7 @@ select option {
   padding: 22px 26px;
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba($accent, 0.16);
+  border: 1px solid rgb(var(--accent-rgb) / 0.16);
   background: #14111a;
 
   &__art {
@@ -2051,7 +2062,7 @@ select option {
     border-radius: 18px;
     background: $accent-grad;
     color: $white;
-    box-shadow: 0 10px 30px rgba($accent, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 30px rgb(var(--accent-rgb) / 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
   &__eyebrow {
     display: block;
@@ -2121,7 +2132,7 @@ select option {
   font-style: italic;
   letter-spacing: -0.04em;
   color: $accent;
-  text-shadow: 0 0 30px rgba($accent, 0.55);
+  text-shadow: 0 0 30px rgb(var(--accent-rgb) / 0.55);
   transform: rotate(-6deg);
 }
 
@@ -2237,7 +2248,7 @@ select option {
   &--btn {
     cursor: pointer;
     &:hover:not(:disabled) {
-      border-color: rgba($accent, 0.4);
+      border-color: rgb(var(--accent-rgb) / 0.4);
     }
   }
 }
@@ -2290,8 +2301,8 @@ select option {
   small {
     padding: 1px 6px;
     border-radius: 6px;
-    background: rgba($accent, 0.16);
-    color: #ff8fb4;
+    background: rgb(var(--accent-rgb) / 0.16);
+    color: var(--accent-soft);
     font-size: 10.5px;
     font-weight: 700;
   }
@@ -2338,8 +2349,8 @@ select option {
     .count {
       padding: 2px 8px;
       border-radius: 99px;
-      background: rgba($accent, 0.14);
-      color: #ff8fb4;
+      background: rgb(var(--accent-rgb) / 0.14);
+      color: var(--accent-soft);
       font-size: 11px;
       font-weight: 700;
     }
@@ -2363,7 +2374,7 @@ select option {
   font-weight: 600;
   cursor: pointer;
   &:hover {
-    color: #ff7aa6;
+    color: var(--accent-soft);
   }
   &:disabled {
     opacity: 0.5;
@@ -2402,8 +2413,8 @@ select option {
     border-color: $line-2;
   }
   &.is-on {
-    border-color: rgba($accent, 0.28);
-    background: linear-gradient(180deg, rgba($accent, 0.07), transparent 60%), $panel;
+    border-color: rgb(var(--accent-rgb) / 0.28);
+    background: linear-gradient(180deg, rgb(var(--accent-rgb) / 0.07), transparent 60%), $panel;
   }
   &__top {
     display: flex;
@@ -2425,7 +2436,7 @@ select option {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: rgba($accent, 0.13);
+    background: rgb(var(--accent-rgb) / 0.13);
     color: $accent;
   }
   &__desc {
@@ -2463,7 +2474,7 @@ select option {
     font-size: 11.5px;
     cursor: pointer;
     &:hover {
-      border-color: rgba($accent, 0.4);
+      border-color: rgb(var(--accent-rgb) / 0.4);
       color: $text;
     }
   }
@@ -2558,8 +2569,8 @@ select option {
   gap: 6px;
   padding: 2px 9px;
   border-radius: 99px;
-  background: rgba($accent, 0.14);
-  color: #ff8fb4;
+  background: rgb(var(--accent-rgb) / 0.14);
+  color: var(--accent-soft);
   font-size: 11px;
   font-weight: 600;
   &::before {
@@ -2656,7 +2667,7 @@ select option {
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  box-shadow: 0 8px 26px rgba($accent, 0.4);
+  box-shadow: 0 8px 26px rgb(var(--accent-rgb) / 0.4);
   transition: transform 0.15s, opacity 0.15s;
   span:not(.spinner) {
     flex: none;
@@ -2767,7 +2778,7 @@ select option {
     height: 32px;
     border-radius: 8px;
     background: linear-gradient(135deg, #3a1a2c, #1d1d26);
-    color: #ffb3cd;
+    color: var(--accent-soft);
     font-size: 11px;
     font-weight: 800;
   }
@@ -2775,7 +2786,7 @@ select option {
 
 .icon-btn--tool {
   &:hover:not(:disabled) {
-    background: rgba($accent, 0.14);
+    background: rgb(var(--accent-rgb) / 0.14);
     color: $accent;
   }
   &.is-on {
@@ -2815,8 +2826,8 @@ select option {
     border: 2px solid #5a5a63;
   }
   &.is-sel {
-    border-color: rgba($accent, 0.6);
-    background: rgba($accent, 0.12);
+    border-color: rgb(var(--accent-rgb) / 0.6);
+    background: rgb(var(--accent-rgb) / 0.12);
     .radio__dot {
       border-color: $accent;
       background: radial-gradient(circle, $accent 0 40%, transparent 45%);
@@ -2973,10 +2984,10 @@ select option {
     border-color: $line-2;
   }
   &.is-sel {
-    border-color: rgba($accent, 0.55);
+    border-color: rgb(var(--accent-rgb) / 0.55);
   }
   &.is-active {
-    background: linear-gradient(180deg, rgba($accent, 0.14), transparent 70%), $panel-2;
+    background: linear-gradient(180deg, rgb(var(--accent-rgb) / 0.14), transparent 70%), $panel-2;
     .pcard__icon {
       background: $accent-grad;
       border-color: transparent;
@@ -3128,7 +3139,7 @@ select option {
     }
   }
   &.is-changed {
-    border-color: rgba($accent, 0.5);
+    border-color: rgb(var(--accent-rgb) / 0.5);
   }
 }
 
@@ -3206,7 +3217,7 @@ select option {
     font-size: 11px;
   }
   &:hover {
-    border-color: rgba($accent, 0.45);
+    border-color: rgb(var(--accent-rgb) / 0.45);
   }
 }
 
@@ -3224,7 +3235,7 @@ select option {
   font-weight: 600;
   font-size: 12.5px;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba($accent, 0.3);
+  box-shadow: 0 6px 16px rgb(var(--accent-rgb) / 0.3);
   &--ghost {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid $line-2;
@@ -3232,7 +3243,7 @@ select option {
     color: #d6d6dc;
   }
   &.is-busy {
-    background: rgba($accent, 0.25);
+    background: rgb(var(--accent-rgb) / 0.25);
     box-shadow: none;
   }
   &:disabled {
@@ -3298,8 +3309,8 @@ select option {
   color: #cfcfd6;
   cursor: pointer;
   &--pink {
-    border-color: rgba($accent, 0.35);
-    background: rgba($accent, 0.12);
+    border-color: rgb(var(--accent-rgb) / 0.35);
+    background: rgb(var(--accent-rgb) / 0.12);
     color: $accent;
   }
   &:hover:not(:disabled) {
@@ -3393,7 +3404,7 @@ select option {
   font-size: 11.5px;
   cursor: pointer;
   &:hover:not(:disabled) {
-    border-color: rgba($accent, 0.4);
+    border-color: rgb(var(--accent-rgb) / 0.4);
     color: $text;
   }
   &__new {
@@ -3410,8 +3421,8 @@ select option {
   margin: 0 auto 16px;
   padding: 12px 14px;
   border-radius: 14px;
-  border: 1px solid rgba($accent, 0.4);
-  background: linear-gradient(90deg, rgba($accent, 0.16), rgba($accent, 0.04)), $panel;
+  border: 1px solid rgb(var(--accent-rgb) / 0.4);
+  background: linear-gradient(90deg, rgb(var(--accent-rgb) / 0.16), rgb(var(--accent-rgb) / 0.04)), $panel;
   animation: fade 0.25s ease;
   &__icon {
     display: grid;
@@ -3549,8 +3560,8 @@ select option {
     border-color: $line-2;
   }
   &.is-sel {
-    border-color: rgba($accent, 0.6);
-    background: linear-gradient(180deg, rgba($accent, 0.12), transparent 70%), $panel-2;
+    border-color: rgb(var(--accent-rgb) / 0.6);
+    background: linear-gradient(180deg, rgb(var(--accent-rgb) / 0.12), transparent 70%), $panel-2;
     .pcard__icon {
       background: $accent-grad;
       border-color: transparent;
@@ -3639,7 +3650,7 @@ select option {
 }
 
 .build {
-  border-color: rgba($accent, 0.35);
+  border-color: rgb(var(--accent-rgb) / 0.35);
   &--done {
     border-color: rgba($ok, 0.35);
   }
@@ -3744,5 +3755,198 @@ select option {
   }
   .build__steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ---------- Descarga de ISO ---------- */
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: $accent;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.isodl {
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--accent-rgb) / 0.35);
+  background: linear-gradient(90deg, rgb(var(--accent-rgb) / 0.1), transparent), $panel-2;
+  &--error {
+    border-color: rgba($danger, 0.4);
+    background: rgba($danger, 0.06);
+  }
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $accent;
+    > div {
+      flex: 1;
+      min-width: 0;
+    }
+    strong {
+      display: block;
+      color: $text;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    small {
+      color: $muted;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  &__bar {
+    height: 6px;
+    margin-top: 10px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    div {
+      height: 100%;
+      border-radius: 99px;
+      background: $accent-grad;
+      transition: width 0.6s ease;
+      &.is-indeterminate {
+        animation: indeterminate 1.2s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  span {
+    font-size: 12px;
+    color: $muted;
+  }
+  select {
+    height: 38px;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    code {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      word-break: break-all;
+    }
+  }
+}
+
+
+/* ---------- Selector de color ---------- */
+
+.theme {
+  position: relative;
+  .pill-btn.is-open {
+    background: rgb(var(--accent-rgb) / 0.16);
+    color: $accent;
+  }
+  &__pop {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: -8px;
+    z-index: 60;
+    width: 264px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid $line-2;
+    background: #15151c;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    animation: fade 0.15s ease;
+    strong {
+      font-size: 13px;
+    }
+    small {
+      color: $muted;
+      font-size: 11px;
+    }
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  &__custom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid $line;
+    cursor: pointer;
+    font-size: 12.5px;
+    span {
+      flex: 1;
+    }
+    code {
+      font-size: 11px;
+    }
+    input[type="color"] {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background: none;
+      cursor: pointer;
+      &::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+      &::-webkit-color-swatch {
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+      }
+    }
+    &.is-sel {
+      border-color: $accent;
+    }
+  }
+}
+
+.swatch {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s;
+  &:hover {
+    transform: scale(1.08);
+  }
+  &.is-sel {
+    border-color: #fff;
+    box-shadow: 0 0 0 2px #15151c inset;
   }
 }

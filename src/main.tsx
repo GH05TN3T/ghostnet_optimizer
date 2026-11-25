@@ -3,6 +3,10 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { Providers } from "./lib/store";
 import "./styles/main.scss";
+import { applyTheme } from "./lib/theme";
+
+// Aplica el color guardado antes de pintar nada (sin parpadeo).
+applyTheme();
 
 // Desactiva el menú contextual del navegador (la app debe sentirse nativa).
 window.addEventListener("contextmenu", (e) => {

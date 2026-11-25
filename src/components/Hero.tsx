@@ -26,15 +26,15 @@ function Art({ kind }: { kind: HeroArt }) {
       <defs>
         <linearGradient id="ph-bg" x1="0" x2="1">
           <stop offset="0.25" stopColor="#120f17" stopOpacity="0" />
-          <stop offset="1" stopColor="#4d1030" stopOpacity="0.9" />
+          <stop offset="1" stopOpacity="0.9" style={{ stopColor: "var(--accent-deep)" }} />
         </linearGradient>
         <radialGradient id="ph-glow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#ff4f8b" stopOpacity="0.75" />
-          <stop offset="1" stopColor="#e8336d" stopOpacity="0" />
+          <stop offset="0" stopOpacity="0.75" style={{ stopColor: "var(--accent-hi)" }} />
+          <stop offset="1" stopOpacity="0" style={{ stopColor: "var(--accent)" }} />
         </radialGradient>
         <linearGradient id="ph-pink" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#ff5b93" />
-          <stop offset="1" stopColor="#a8154f" />
+          <stop offset="0" style={{ stopColor: "var(--accent-hi)" }} />
+          <stop offset="1" style={{ stopColor: "var(--accent-2)" }} />
         </linearGradient>
         <filter id="ph-blur">
           <feGaussianBlur stdDeviation="22" />
@@ -45,14 +45,14 @@ function Art({ kind }: { kind: HeroArt }) {
 
       {kind === "nebula" && (
         <g filter="url(#ph-blur)">
-          <ellipse cx="640" cy="80" rx="160" ry="40" fill="#e8336d" opacity="0.45" transform="rotate(-12 640 80)" />
-          <ellipse cx="760" cy="60" rx="110" ry="30" fill="#ff7aa6" opacity="0.35" />
-          <ellipse cx="560" cy="130" rx="120" ry="28" fill="#8a1d55" opacity="0.6" />
+          <ellipse cx="640" cy="80" rx="160" ry="40" opacity="0.45" transform="rotate(-12 640 80)" style={{ fill: "var(--accent)" }} />
+          <ellipse cx="760" cy="60" rx="110" ry="30" opacity="0.35" style={{ fill: "var(--accent-hi)" }} />
+          <ellipse cx="560" cy="130" rx="120" ry="28" opacity="0.6" style={{ fill: "var(--accent-2)" }} />
         </g>
       )}
 
       {kind === "orbit" && (
-        <g className="ph-fig" fill="none" stroke="#ff9cc0" strokeOpacity="0.55" strokeWidth="1.5">
+        <g className="ph-fig" fill="none" strokeOpacity="0.55" strokeWidth="1.5" style={{ stroke: "var(--accent-soft)" }} >
           <ellipse cx="640" cy="100" rx="120" ry="34" transform="rotate(-18 640 100)" />
           <ellipse cx="640" cy="100" rx="120" ry="34" transform="rotate(28 640 100)" />
           <ellipse cx="640" cy="100" rx="120" ry="34" transform="rotate(80 640 100)" />

@@ -1,9 +1,11 @@
+import { downloadDir } from "@tauri-apps/api/path";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { useEffect, useState, type ReactNode } from "react";
 import { PageHero, Perks } from "../components/Hero";
 import {
   IconCheck,
   IconCpu,
+  IconDownload,
   IconDisc,
   IconExternal,
   IconFolder,
@@ -18,6 +20,7 @@ import {
 import { Badge, Button, Toggle } from "../components/ui";
 import { api, errMsg, type BuildOptions, type IsoInfo } from "../lib/api";
 import { BUILD_STEPS, builderStore, useBuilder } from "../lib/builder";
+import { isoStore, useIsoDownload } from "../lib/isodl";
 import { bytes } from "../lib/format";
 import { useToast } from "../lib/store";
 
@@ -84,10 +87,8 @@ export default function Builder() {
     return () => window.clearInterval(t);
   }, [running]);
 
-  const pickIso = async () => {
+  const loadIso = async (f: string) => {
     try {
-      const f = await open({ multiple: false, directory: false, filters: [{ name: "Imagen ISO", extensions: ["iso"] }] });
-      if (!f || Array.isArray(f)) return;
       setIso(f);
       setInfo(null);
       setHash("");
@@ -104,6 +105,23 @@ export default function Builder() {
       setInspecting(false);
     }
   };
+
+  const pickIso = async () => {
+    try {
+      const f = await open({ multiple: false, directory: false, filters: [{ name: "Imagen ISO", extensions: ["iso"] }] });
+      if (f && !Array.isArray(f)) await loadIso(f);
+    } catch (e) {
+      toast(errMsg(e), "error");
+    }
+  };
+
+  // Descarga automática desde Microsoft
+  const dl = useIsoDownload();
+  const [dlOpen, setDlOpen] = useState(false);
+  useEffect(() => isoStore.onDone((path) => {
+    toast("ISO descargada de Microsoft");
+    loadIso(path);
+  }), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pickOut = async () => {
     try {
@@ -253,15 +271,23 @@ export default function Builder() {
                 <small className="muted">La oficial de Microsoft. No se modifica: se crea una ISO nueva.</small>
               </div>
               <div className="panel__actions">
-                <Button small variant="ghost" icon={<IconExternal size={14} />} onClick={() => api.openIsoDownload().catch(() => {})}>
-                  Descargar ISO oficial
+                <Button small variant={iso ? "default" : "primary"} icon={<IconDownload size={14} />} disabled={running || dl.status === "running"} onClick={() => setDlOpen(true)}>
+                  Descargar de Microsoft
                 </Button>
-                <Button small variant="primary" icon={<IconDisc size={14} />} loading={inspecting} disabled={running} onClick={pickIso}>
-                  {iso ? "Cambiar ISO" : "Elegir ISO…"}
+                <Button small icon={<IconDisc size={14} />} loading={inspecting} disabled={running || dl.status === "running"} onClick={pickIso}>
+                  {iso ? "Cambiar ISO" : "Ya la tengo…"}
                 </Button>
               </div>
             </header>
-            {!iso && <p className="muted">Todavía no has elegido ninguna ISO.</p>}
+            {dl.status !== "idle" && dl.status !== "done" && <DownloadProgress />}
+            {!iso && dl.status === "idle" && (
+              <p className="muted">
+                Descárgala aquí mismo desde Microsoft (unos 5–7 GB) o elige una que ya tengas.{" "}
+                <button className="link" onClick={() => api.openIsoDownload().catch(() => {})}>
+                  Abrir la web de Microsoft <IconExternal size={12} />
+                </button>
+              </p>
+            )}
             {iso && (
               <div className="iso">
                 <div className="iso__file">
@@ -418,6 +444,184 @@ export default function Builder() {
           </section>
         </aside>
       </div>
+
+      {dlOpen && <DownloadDialog onClose={() => setDlOpen(false)} />}
     </>
+  );
+}
+
+function DownloadProgress() {
+  const dl = useIsoDownload();
+  const toast = useToast();
+  const pct = dl.total ? (dl.done / dl.total) * 100 : 0;
+  const eta = dl.speed > 0 && dl.total ? (dl.total - dl.done) / dl.speed : 0;
+  return (
+    <div className={`isodl isodl--${dl.status}`}>
+      <div className="isodl__top">
+        <IconDownload size={16} />
+        <div>
+          <strong>
+            {dl.status === "running"
+              ? dl.total
+                ? `Descargando ${dl.file?.split("\\").pop() ?? "la ISO"}`
+                : "Pidiendo el enlace a Microsoft…"
+              : dl.status === "error"
+                ? "La descarga falló"
+                : "Descarga cancelada"}
+          </strong>
+          <small>
+            {dl.status === "running" && dl.total
+              ? `${bytes(dl.done)} de ${bytes(dl.total)} · ${bytes(dl.speed)}/s${eta ? ` · quedan ${elapsed(eta * 1000)}` : ""}`
+              : dl.status === "error"
+                ? dl.error
+                : ""}
+          </small>
+        </div>
+        {dl.status === "running" ? (
+          <Button
+            small
+            variant="danger"
+            icon={<IconX size={13} />}
+            onClick={async () => {
+              isoStore.set({ status: "cancelled" });
+              try {
+                await api.isoDownloadCancel();
+              } catch (e) {
+                toast(errMsg(e), "error");
+              }
+            }}
+          >
+            Cancelar
+          </Button>
+        ) : (
+          <Button small variant="ghost" onClick={isoStore.reset}>
+            Cerrar
+          </Button>
+        )}
+      </div>
+      {dl.status === "running" && (
+        <div className="isodl__bar">
+          <div className={dl.total ? "" : "is-indeterminate"} style={{ width: dl.total ? `${pct}%` : "30%" }} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function pickDefaultLanguage(list: { id: string; name: string }[]) {
+  const nav = (navigator.language || "es").toLowerCase();
+  const prefer =
+    nav.startsWith("es") && nav !== "es-es"
+      ? ["Spanish (Mexico)", "Spanish"]
+      : nav.startsWith("es")
+        ? ["Spanish", "Spanish (Mexico)"]
+        : nav.startsWith("pt")
+          ? ["Brazilian Portuguese", "Portuguese"]
+          : ["English (United States)", "English International"];
+  for (const p of prefer) {
+    const f = list.find((l) => l.name === p);
+    if (f) return f.id;
+  }
+  return list[0]?.id ?? "";
+}
+
+function DownloadDialog({ onClose }: { onClose: () => void }) {
+  const toast = useToast();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [data, setData] = useState<{ session: string; languages: { id: string; name: string; display: string }[] } | null>(null);
+  const [sku, setSku] = useState("");
+  const [dir, setDir] = useState("");
+
+  useEffect(() => {
+    api
+      .isoLanguages()
+      .then((d) => {
+        setData(d);
+        setSku(pickDefaultLanguage(d.languages));
+      })
+      .catch((e) => setError(errMsg(e)))
+      .finally(() => setLoading(false));
+    downloadDir()
+      .then(setDir)
+      .catch(() => {});
+  }, []);
+
+  const pickDir = async () => {
+    const f = await open({ directory: true, multiple: false, defaultPath: dir || undefined });
+    if (f && !Array.isArray(f)) setDir(f);
+  };
+
+  const start = async () => {
+    if (!data || !sku || !dir) return;
+    isoStore.begin();
+    onClose();
+    try {
+      await api.isoDownload(sku, data.session, dir);
+    } catch (e) {
+      isoStore.set({ status: "error", error: errMsg(e) });
+      toast(errMsg(e), "error");
+    }
+  };
+
+  return (
+    <div className="modal" onMouseDown={onClose}>
+      <div className="modal__box" onMouseDown={(e) => e.stopPropagation()}>
+        <header>
+          <IconDownload />
+          <h3>Descargar Windows 11 de Microsoft</h3>
+          <button className="icon-btn" onClick={onClose} aria-label="Cerrar">
+            <IconX />
+          </button>
+        </header>
+        <div className="modal__body">
+          <p>Se descarga la ISO oficial de 64 bits directamente de los servidores de Microsoft (unos 5–7 GB).</p>
+          {loading && (
+            <p className="muted">
+              <span className="spinner spinner--sm" /> Consultando idiomas disponibles…
+            </p>
+          )}
+          {error && (
+            <div className="banner banner--danger">
+              {error}{" "}
+              <button className="link" onClick={() => api.openIsoDownload().catch(() => {})}>
+                Abrir la web de Microsoft
+              </button>
+            </div>
+          )}
+          {data && (
+            <>
+              <label className="field">
+                <span>Idioma</span>
+                <select value={sku} onChange={(e) => setSku(e.target.value)}>
+                  {data.languages.map((l) => (
+                    <option key={l.id} value={l.id}>
+                      {l.display}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="field">
+                <span>Carpeta</span>
+                <div className="field__row">
+                  <code>{dir || "—"}</code>
+                  <Button small icon={<IconFolder size={14} />} onClick={pickDir}>
+                    Cambiar…
+                  </Button>
+                </div>
+              </label>
+            </>
+          )}
+        </div>
+        <footer>
+          <Button variant="ghost" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" icon={<IconDownload size={15} />} disabled={!data || !sku || !dir} onClick={start}>
+            Descargar
+          </Button>
+        </footer>
+      </div>
+    </div>
   );
 }
