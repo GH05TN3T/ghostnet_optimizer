@@ -1,0 +1,714 @@
+[
+  {
+    "id": "telemetry",
+    "name": "Desactivar telemetría",
+    "desc": "Pone la recolección de datos de diagnóstico al mínimo y desactiva los servicios DiagTrack y dmwappushservice.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection", "name": "AllowTelemetry", "value": 0 }
+    ],
+    "svc": [
+      { "name": "DiagTrack", "start": "Disabled", "default": "Automatic" },
+      { "name": "dmwappushservice", "start": "Disabled", "default": "Manual" }
+    ]
+  },
+  {
+    "id": "telemetry_tasks",
+    "name": "Desactivar tareas de telemetría",
+    "desc": "Desactiva las tareas programadas del Programa de mejora de la experiencia (CEIP), el Compatibility Appraiser y el recolector de diagnóstico de disco.",
+    "category": "privacidad",
+    "recommended": true,
+    "tasks": [
+      { "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\", "name": "Consolidator" },
+      { "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\", "name": "UsbCeip" },
+      { "path": "\\Microsoft\\Windows\\Application Experience\\", "name": "Microsoft Compatibility Appraiser" },
+      { "path": "\\Microsoft\\Windows\\Application Experience\\", "name": "ProgramDataUpdater" },
+      { "path": "\\Microsoft\\Windows\\Autochk\\", "name": "Proxy" },
+      { "path": "\\Microsoft\\Windows\\DiskDiagnostic\\", "name": "Microsoft-Windows-DiskDiagnosticDataCollector" }
+    ]
+  },
+  {
+    "id": "advertising_id",
+    "name": "Desactivar ID de publicidad",
+    "desc": "Evita que las apps usen tu ID de publicidad para mostrarte anuncios personalizados.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled", "value": 0, "default": 1 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo", "name": "DisabledByGroupPolicy", "value": 1 }
+    ]
+  },
+  {
+    "id": "activity_history",
+    "name": "Desactivar historial de actividad",
+    "desc": "Windows deja de guardar y subir la lista de apps, archivos y webs que usas (Timeline).",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "PublishUserActivities", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "UploadUserActivities", "value": 0 }
+    ]
+  },
+  {
+    "id": "tailored_experiences",
+    "name": "Desactivar experiencias personalizadas",
+    "desc": "Microsoft deja de usar tus datos de diagnóstico para mostrarte consejos y anuncios a medida.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy", "name": "TailoredExperiencesWithDiagnosticDataEnabled", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "feedback",
+    "name": "Desactivar solicitudes de comentarios",
+    "desc": "Windows deja de preguntarte tu opinión con notificaciones del Centro de opiniones.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "DoNotShowFeedbackNotifications", "value": 1 }
+    ]
+  },
+  {
+    "id": "bing_search",
+    "name": "Quitar Bing del menú Inicio",
+    "desc": "La búsqueda de Inicio solo busca en tu PC, sin resultados web de Bing. Se nota más rápida.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "BingSearchEnabled", "value": 0 },
+      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer", "name": "DisableSearchBoxSuggestions", "value": 1 }
+    ]
+  },
+  {
+    "id": "copilot",
+    "name": "Desactivar Copilot",
+    "desc": "Desactiva Windows Copilot por directiva y quita su botón de la barra de tareas.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "value": 1 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "value": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowCopilotButton", "value": 0 }
+    ]
+  },
+  {
+    "id": "recall",
+    "name": "Desactivar Recall",
+    "desc": "Impide que Windows haga capturas periódicas de tu pantalla para la función Recall (PCs Copilot+).",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI", "name": "DisableAIDataAnalysis", "value": 1 },
+      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsAI", "name": "DisableAIDataAnalysis", "value": 1 }
+    ]
+  },
+  {
+    "id": "consumer_features",
+    "name": "Bloquear apps sugeridas e instaladas solas",
+    "desc": "Evita que Windows instale apps promocionadas (Candy Crush, TikTok, etc.) y que muestre sugerencias en Inicio.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableWindowsConsumerFeatures", "value": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SilentInstalledAppsEnabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SystemPaneSuggestionsEnabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338388Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "PreInstalledAppsEnabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "OemPreInstalledAppsEnabled", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "tips",
+    "name": "Desactivar consejos y trucos",
+    "desc": "Quita las notificaciones de consejos, la pantalla de bienvenida tras actualizar y las sugerencias para terminar de configurar Windows.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SoftLandingEnabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338389Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-310093Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement", "name": "ScoobeSystemSettingEnabled", "value": 0 }
+    ]
+  },
+  {
+    "id": "lockscreen_ads",
+    "name": "Quitar anuncios de la pantalla de bloqueo",
+    "desc": "Desactiva los datos curiosos, consejos y promociones que aparecen en la pantalla de bloqueo.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "RotatingLockScreenOverlayEnabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338387Enabled", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "settings_ads",
+    "name": "Quitar contenido sugerido en Configuración",
+    "desc": "Oculta las sugerencias y promociones que aparecen dentro de la app Configuración.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338393Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353694Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353696Enabled", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "inking_typing",
+    "name": "Desactivar recolección de escritura y voz",
+    "desc": "Windows deja de recopilar lo que escribes y dictas para \"mejorar\" el reconocimiento.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization", "name": "RestrictImplicitInkCollection", "value": 1, "default": 0 },
+      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization", "name": "RestrictImplicitTextCollection", "value": 1, "default": 0 },
+      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore", "name": "HarvestContacts", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Personalization\\Settings", "name": "AcceptedPrivacyPolicy", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "error_reporting",
+    "name": "Desactivar informe de errores",
+    "desc": "Windows deja de enviar informes de fallos a Microsoft y desactiva el servicio WerSvc.",
+    "category": "privacidad",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "value": 1 }
+    ],
+    "svc": [
+      { "name": "WerSvc", "start": "Disabled", "default": "Manual" }
+    ]
+  },
+  {
+    "id": "location",
+    "name": "Desactivar ubicación",
+    "desc": "Ninguna app podrá usar tu ubicación. Ojo: el Tiempo, Mapas o la zona horaria automática dejarán de detectarla.",
+    "category": "privacidad",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location", "name": "Value", "value": "Deny", "type": "String", "default": "Allow" }
+    ]
+  },
+  {
+    "id": "app_launch_tracking",
+    "name": "No registrar apps abiertas",
+    "desc": "Windows deja de registrar qué programas abres. Desaparece la lista \"Más usadas\" de Inicio.",
+    "category": "privacidad",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "value": 0, "default": 1 }
+    ]
+  },
+
+  {
+    "id": "dark_mode",
+    "name": "Modo oscuro",
+    "desc": "Pone Windows y las apps en tema oscuro.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "AppsUseLightTheme", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "SystemUsesLightTheme", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "show_extensions",
+    "name": "Mostrar extensiones de archivo",
+    "desc": "El Explorador muestra .exe, .zip, .lua... Ayuda a ver qué es cada archivo y a detectar archivos falsos.",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "HideFileExt", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "show_hidden",
+    "name": "Mostrar archivos ocultos",
+    "desc": "El Explorador muestra carpetas como AppData y archivos ocultos.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Hidden", "value": 1, "default": 2 }
+    ]
+  },
+  {
+    "id": "classic_context_menu",
+    "name": "Menú contextual clásico (Windows 11)",
+    "desc": "El clic derecho vuelve a mostrar el menú completo de Windows 10, sin \"Mostrar más opciones\". Reinicia el Explorador para verlo.",
+    "category": "interfaz",
+    "recommended": false,
+    "explorer": true,
+    "ps": {
+      "check": "Test-Path -LiteralPath 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32'",
+      "apply": "New-Item -Path 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32' -Force | Out-Null; Set-ItemProperty -LiteralPath 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32' -Name '(default)' -Value ''",
+      "revert": "Remove-Item -LiteralPath 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' -Recurse -Force -ErrorAction SilentlyContinue"
+    }
+  },
+  {
+    "id": "taskbar_left",
+    "name": "Barra de tareas a la izquierda (Windows 11)",
+    "desc": "Alinea el botón Inicio y los iconos a la izquierda, como en Windows 10.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "value": 0 }
+    ]
+  },
+  {
+    "id": "hide_widgets",
+    "name": "Desactivar Widgets / Noticias",
+    "desc": "Quita el panel de widgets y noticias de la barra de tareas (y su proceso en segundo plano).",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Dsh", "name": "AllowNewsAndInterests", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds", "name": "EnableFeeds", "value": 0 }
+    ]
+  },
+  {
+    "id": "hide_taskview",
+    "name": "Ocultar botón Vista de tareas",
+    "desc": "Quita el botón de escritorios virtuales de la barra de tareas (Win+Tab sigue funcionando).",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowTaskViewButton", "value": 0 }
+    ]
+  },
+  {
+    "id": "hide_search_box",
+    "name": "Ocultar cuadro de búsqueda",
+    "desc": "Quita la búsqueda de la barra de tareas. Puedes seguir buscando pulsando la tecla Windows y escribiendo.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "value": 0 }
+    ]
+  },
+  {
+    "id": "hide_chat",
+    "name": "Ocultar icono de Chat / Teams",
+    "desc": "Quita el icono de Chat de Teams de la barra de tareas.",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarMn", "value": 0 }
+    ]
+  },
+  {
+    "id": "end_task",
+    "name": "\"Finalizar tarea\" en la barra de tareas",
+    "desc": "Añade la opción Finalizar tarea al clic derecho de las apps en la barra (Windows 11 23H2 o superior).",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings", "name": "TaskbarEndTask", "value": 1 }
+    ]
+  },
+  {
+    "id": "start_recommendations",
+    "name": "Quitar recomendaciones de Inicio",
+    "desc": "Deja de mostrar recomendaciones de apps, consejos y accesos directos en el menú Inicio.",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "value": 0 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_AccountNotifications", "value": 0 }
+    ]
+  },
+  {
+    "id": "this_pc",
+    "name": "Explorador abre en \"Este equipo\"",
+    "desc": "Al abrir el Explorador verás tus discos en lugar de Inicio/Acceso rápido.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "LaunchTo", "value": 1 }
+    ]
+  },
+  {
+    "id": "clock_seconds",
+    "name": "Segundos en el reloj",
+    "desc": "Muestra los segundos en el reloj de la barra de tareas.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowSecondsInSystemClock", "value": 1 }
+    ]
+  },
+  {
+    "id": "transparency",
+    "name": "Desactivar transparencias",
+    "desc": "Quita el efecto translúcido de la barra y los menús. Libera un poco de GPU en equipos modestos.",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "EnableTransparency", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "animations",
+    "name": "Reducir animaciones",
+    "desc": "Quita las animaciones al minimizar/maximizar y de la barra de tareas. Las ventanas se sienten más rápidas.",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Control Panel\\Desktop\\WindowMetrics", "name": "MinAnimate", "value": "0", "type": "String", "default": "1" },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAnimations", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "menu_delay",
+    "name": "Menús instantáneos",
+    "desc": "Los submenús se abren sin el retraso de 400 ms que trae Windows.",
+    "category": "interfaz",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Control Panel\\Desktop", "name": "MenuShowDelay", "value": "0", "type": "String", "default": "400" }
+    ]
+  },
+  {
+    "id": "verbose_status",
+    "name": "Mensajes detallados al iniciar/apagar",
+    "desc": "Muestra qué está haciendo Windows al arrancar o apagarse en lugar de solo \"Espere\".",
+    "category": "interfaz",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "name": "VerboseStatus", "value": 1 }
+    ]
+  },
+
+  {
+    "id": "long_paths",
+    "name": "Permitir rutas largas",
+    "desc": "Quita el límite de 260 caracteres en rutas. Útil para node_modules, repos y proyectos grandes.",
+    "category": "sistema",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem", "name": "LongPathsEnabled", "value": 1, "default": 0 }
+    ]
+  },
+  {
+    "id": "delivery_optimization",
+    "name": "No compartir actualizaciones por P2P",
+    "desc": "Tu PC deja de subir actualizaciones de Windows a otros equipos de Internet. Ahorra ancho de banda.",
+    "category": "sistema",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode", "value": 0 }
+    ]
+  },
+  {
+    "id": "remote_assistance",
+    "name": "Desactivar Asistencia remota",
+    "desc": "Cierra la puerta a que alguien se conecte para \"ayudarte\" con Asistencia remota. Mejora la seguridad.",
+    "category": "sistema",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "useless_services",
+    "name": "Desactivar servicios innecesarios",
+    "desc": "Desactiva Fax, Mapas sin conexión (MapsBroker), Demo de tienda (RetailDemo) y el servicio de sensores de geocerca.",
+    "category": "sistema",
+    "recommended": true,
+    "svc": [
+      { "name": "Fax", "start": "Disabled", "default": "Manual" },
+      { "name": "MapsBroker", "start": "Disabled", "default": "AutomaticDelayed" },
+      { "name": "RetailDemo", "start": "Disabled", "default": "Manual" },
+      { "name": "lfsvc", "start": "Disabled", "default": "Manual" }
+    ]
+  },
+  {
+    "id": "fast_startup",
+    "name": "Desactivar Inicio rápido",
+    "desc": "El apagado pasa a ser un apagado real. Evita problemas con drivers, actualizaciones y arranque dual. El arranque tarda unos segundos más.",
+    "category": "sistema",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power", "name": "HiberbootEnabled", "value": 0, "default": 1 }
+    ]
+  },
+  {
+    "id": "hibernation",
+    "name": "Desactivar hibernación",
+    "desc": "Borra hiberfil.sys y libera varios GB (tanto como tu RAM). En portátiles perderás la opción Hibernar.",
+    "category": "sistema",
+    "recommended": false,
+    "ps": {
+      "check": "(Get-Reg 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Power' 'HibernateEnabled') -eq 0",
+      "apply": "powercfg.exe /hibernate off",
+      "revert": "powercfg.exe /hibernate on"
+    }
+  },
+  {
+    "id": "reserved_storage",
+    "name": "Desactivar almacenamiento reservado",
+    "desc": "Libera ~7 GB que Windows reserva para actualizaciones. Puede fallar si hay una actualización pendiente.",
+    "category": "sistema",
+    "recommended": false,
+    "ps": {
+      "check": "(Get-WindowsReservedStorageState).ReservedStorageState -eq 'Disabled'",
+      "apply": "Set-WindowsReservedStorageState -State Disabled",
+      "revert": "Set-WindowsReservedStorageState -State Enabled"
+    }
+  },
+  {
+    "id": "sysmain",
+    "name": "Desactivar SysMain (Superfetch)",
+    "desc": "Deja de precargar apps en RAM. Con SSD rara vez ayuda y reduce uso de disco y RAM. Con HDD mejor dejarlo.",
+    "category": "sistema",
+    "recommended": false,
+    "svc": [
+      { "name": "SysMain", "start": "Disabled", "default": "Automatic" }
+    ]
+  },
+  {
+    "id": "search_indexing",
+    "name": "Desactivar indexación de búsqueda",
+    "desc": "Detiene el servicio Windows Search. Menos uso de disco, pero buscar archivos será más lento.",
+    "category": "sistema",
+    "recommended": false,
+    "svc": [
+      { "name": "WSearch", "start": "Disabled", "default": "AutomaticDelayed" }
+    ]
+  },
+  {
+    "id": "print_spooler",
+    "name": "Desactivar cola de impresión",
+    "desc": "Solo si no usas impresora. Desactiva el servicio Spooler (también cierra la vulnerabilidad PrintNightmare).",
+    "category": "sistema",
+    "recommended": false,
+    "svc": [
+      { "name": "Spooler", "start": "Disabled", "default": "Automatic" }
+    ]
+  },
+  {
+    "id": "driver_updates",
+    "name": "No instalar drivers desde Windows Update",
+    "desc": "Windows Update deja de reemplazar tus drivers (por ejemplo el de la GPU) por versiones genéricas.",
+    "category": "sistema",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate", "name": "ExcludeWUDriversInQualityUpdate", "value": 1 }
+    ]
+  },
+  {
+    "id": "background_apps",
+    "name": "Bloquear apps en segundo plano",
+    "desc": "Las apps de la Microsoft Store no se ejecutan en segundo plano. Puede retrasar notificaciones de esas apps.",
+    "category": "sistema",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications", "name": "GlobalUserDisabled", "value": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "BackgroundAppGlobalToggle", "value": 0 }
+    ]
+  },
+
+  {
+    "id": "game_mode",
+    "name": "Activar Modo juego",
+    "desc": "Windows prioriza el juego en primer plano y pausa Windows Update mientras juegas.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Software\\Microsoft\\GameBar", "name": "AutoGameModeEnabled", "value": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\GameBar", "name": "AllowAutoGameMode", "value": 1 }
+    ]
+  },
+  {
+    "id": "game_dvr",
+    "name": "Desactivar Game DVR (grabación de Xbox)",
+    "desc": "Quita la grabación en segundo plano de Xbox Game Bar, que consume GPU. OBS y otros grabadores no se ven afectados.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_Enabled", "value": 0, "default": 1 },
+      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "value": 0 },
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR", "name": "AllowGameDVR", "value": 0 }
+    ]
+  },
+  {
+    "id": "fso",
+    "name": "Desactivar optimizaciones de pantalla completa",
+    "desc": "Los juegos en pantalla completa usan exclusivo real. En algunos juegos baja la latencia, en otros no cambia nada.",
+    "category": "rendimiento",
+    "recommended": false,
+    "reg": [
+      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "value": 2 },
+      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_FSEBehavior", "value": 2 },
+      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_HonorUserFSEBehaviorMode", "value": 1 },
+      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_DXGIHonorFSEWindowsCompatible", "value": 1 }
+    ]
+  },
+  {
+    "id": "hags",
+    "name": "Programación de GPU acelerada por hardware",
+    "desc": "La GPU gestiona su propia memoria (HAGS). Requiere GPU NVIDIA GTX 1000+ / AMD RX 5000+ y reiniciar. Necesario para DLSS Frame Generation.",
+    "category": "rendimiento",
+    "recommended": false,
+    "reboot": true,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers", "name": "HwSchMode", "value": 2, "default": 1 }
+    ]
+  },
+  {
+    "id": "mouse_accel",
+    "name": "Desactivar aceleración del ratón",
+    "desc": "Quita \"Mejorar precisión del puntero\": el cursor se mueve 1:1 con tu mano. Ideal para shooters.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseSpeed", "value": "0", "type": "String", "default": "1" },
+      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseThreshold1", "value": "0", "type": "String", "default": "6" },
+      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseThreshold2", "value": "0", "type": "String", "default": "10" }
+    ]
+  },
+  {
+    "id": "network_throttling",
+    "name": "Quitar limitación de red multimedia",
+    "desc": "Windows deja de limitar el tráfico de red mientras se reproduce audio/vídeo y reserva menos CPU a tareas de fondo.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "NetworkThrottlingIndex", "value": -1, "default": 10 },
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "SystemResponsiveness", "value": 10, "default": 20 }
+    ]
+  },
+  {
+    "id": "games_priority",
+    "name": "Prioridad alta para juegos",
+    "desc": "Sube la prioridad de CPU, GPU y E/S que el programador multimedia da a los juegos.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "GPU Priority", "value": 8, "default": 8 },
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "Priority", "value": 6, "default": 2 },
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "Scheduling Category", "value": "High", "type": "String", "default": "Medium" },
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "SFIO Priority", "value": "High", "type": "String", "default": "Normal" }
+    ]
+  },
+  {
+    "id": "foreground_boost",
+    "name": "Más CPU para la ventana activa",
+    "desc": "Ajusta Win32PrioritySeparation para dar intervalos de CPU más cortos y prioritarios a la app en primer plano.",
+    "category": "rendimiento",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl", "name": "Win32PrioritySeparation", "value": 38, "default": 2 }
+    ]
+  },
+  {
+    "id": "power_throttling",
+    "name": "Desactivar Power Throttling",
+    "desc": "Windows deja de bajar la potencia de las apps en segundo plano. En portátiles gasta más batería.",
+    "category": "rendimiento",
+    "recommended": false,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "value": 1 }
+    ]
+  },
+  {
+    "id": "nagle",
+    "name": "Desactivar algoritmo de Nagle",
+    "desc": "Envía los paquetes TCP al instante en vez de agruparlos. Puede bajar el ping en juegos que usan TCP.",
+    "category": "rendimiento",
+    "recommended": false,
+    "ps": {
+      "check": "$any = $false; $ok = $true; foreach ($i in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces') { $p = Get-ItemProperty -LiteralPath $i.PSPath; if ($p.DhcpIPAddress -or $p.IPAddress) { $any = $true; if ($p.TcpAckFrequency -ne 1 -or $p.TCPNoDelay -ne 1) { $ok = $false } } }; $any -and $ok",
+      "apply": "foreach ($i in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces') { $p = Get-ItemProperty -LiteralPath $i.PSPath; if ($p.DhcpIPAddress -or $p.IPAddress) { New-ItemProperty -LiteralPath $i.PSPath -Name TcpAckFrequency -Value 1 -PropertyType DWord -Force | Out-Null; New-ItemProperty -LiteralPath $i.PSPath -Name TCPNoDelay -Value 1 -PropertyType DWord -Force | Out-Null } }",
+      "revert": "foreach ($i in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces') { Remove-ItemProperty -LiteralPath $i.PSPath -Name TcpAckFrequency -ErrorAction SilentlyContinue; Remove-ItemProperty -LiteralPath $i.PSPath -Name TCPNoDelay -ErrorAction SilentlyContinue }"
+    }
+  },
+  {
+    "id": "sticky_keys",
+    "name": "Desactivar aviso de Teclas especiales",
+    "desc": "Pulsar Shift 5 veces ya no abre el aviso de Teclas especiales en mitad de una partida.",
+    "category": "rendimiento",
+    "recommended": true,
+    "reg": [
+      { "path": "HKCU\\Control Panel\\Accessibility\\StickyKeys", "name": "Flags", "value": "506", "type": "String", "default": "510" },
+      { "path": "HKCU\\Control Panel\\Accessibility\\ToggleKeys", "name": "Flags", "value": "58", "type": "String", "default": "62" },
+      { "path": "HKCU\\Control Panel\\Accessibility\\Keyboard Response", "name": "Flags", "value": "122", "type": "String", "default": "126" }
+    ]
+  },
+  {
+    "id": "xbox_services",
+    "name": "Desactivar servicios de Xbox",
+    "desc": "Desactiva Xbox Live Auth, guardado en la nube y red de Xbox. No lo actives si juegas con la app de Xbox o Game Pass.",
+    "category": "rendimiento",
+    "recommended": false,
+    "svc": [
+      { "name": "XblAuthManager", "start": "Disabled", "default": "Manual" },
+      { "name": "XblGameSave", "start": "Disabled", "default": "Manual" },
+      { "name": "XboxNetApiSvc", "start": "Disabled", "default": "Manual" },
+      { "name": "XboxGipSvc", "start": "Disabled", "default": "Manual" }
+    ]
+  },
+
+  {
+    "id": "windows_update",
+    "name": "Desactivar actualizaciones automáticas",
+    "desc": "Windows Update deja de descargar e instalar solo. Tendrás que actualizar a mano: sin parches de seguridad quedas expuesto.",
+    "category": "seguridad",
+    "recommended": false,
+    "risk": "high",
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU", "name": "NoAutoUpdate", "value": 1 }
+    ]
+  },
+  {
+    "id": "defender_realtime",
+    "name": "Desactivar protección en tiempo real de Defender",
+    "desc": "Apaga el escaneo en tiempo real. Antes tienes que quitar \"Protección contra alteraciones\" en Seguridad de Windows, si no Windows lo bloquea. Defender puede reactivarlo solo.",
+    "category": "seguridad",
+    "recommended": false,
+    "risk": "high",
+    "ps": {
+      "check": "(Get-MpPreference).DisableRealtimeMonitoring -eq $true",
+      "apply": "Set-MpPreference -DisableRealtimeMonitoring $true",
+      "revert": "Set-MpPreference -DisableRealtimeMonitoring $false"
+    }
+  },
+  {
+    "id": "smartscreen",
+    "name": "Desactivar SmartScreen",
+    "desc": "Windows deja de avisarte antes de abrir programas descargados poco conocidos.",
+    "category": "seguridad",
+    "recommended": false,
+    "risk": "high",
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableSmartScreen", "value": 0 }
+    ]
+  },
+  {
+    "id": "uac_prompt",
+    "name": "Quitar avisos de UAC",
+    "desc": "Los programas se elevan a administrador sin pedirte confirmación. Cualquier malware también lo hará.",
+    "category": "seguridad",
+    "recommended": false,
+    "risk": "high",
+    "reg": [
+      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "name": "ConsentPromptBehaviorAdmin", "value": 0, "default": 5 }
+    ]
+  },
+  {
+    "id": "memory_integrity",
+    "name": "Desactivar Integridad de memoria (HVCI)",
+    "desc": "Puede dar algunos FPS más, pero baja la protección contra drivers maliciosos. Algunos anticheats (Vanguard, FACEIT) la exigen activada. Requiere reiniciar.",
+    "category": "seguridad",
+    "recommended": false,
+    "risk": "high",
+    "reboot": true,
+    "reg": [
+      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity", "name": "Enabled", "value": 0, "default": 1 }
+    ]
+  }
+]
