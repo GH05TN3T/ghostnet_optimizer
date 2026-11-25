@@ -4,10 +4,21 @@ import { IconBolt, IconDownload, IconGrid, IconRefresh, IconSearch, IconShield, 
 import { Button, Confirm, Empty } from "../components/ui";
 import { api, errMsg, type AppItem } from "../lib/api";
 import { useToast } from "../lib/store";
+import { iconUrls } from "../lib/appIcons";
 
 type Sort = "popular" | "az" | "installed";
 
 function Avatar({ app, size = 38 }: { app: AppItem; size?: number }) {
+  const urls = iconUrls(app.id);
+  const [i, setI] = useState(0);
+  if (i < urls.length) {
+    return (
+      <span className="app-icon" style={{ width: size, height: size }}>
+        <img src={urls[i]} alt="" loading="lazy" draggable={false} onError={() => setI((x) => x + 1)} />
+      </span>
+    );
+  }
+  // Sin Internet o sin icono: iniciales con el color de la app.
   const letters = app.name.replace(/[^A-Za-z0-9+]/g, "").slice(0, 2);
   return (
     <span className="app-avatar" style={{ width: size, height: size, background: app.color, fontSize: size * 0.36 }}>
