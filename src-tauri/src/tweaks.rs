@@ -58,6 +58,9 @@ pub struct Tweak {
     pub explorer: bool,
     #[serde(default)]
     pub risk: Option<String>,
+    /// Solo se muestra para esta marca de GPU (nvidia / amd / intel).
+    #[serde(default)]
+    pub vendor: Option<String>,
     #[serde(default)]
     pub reg: Vec<RegEntry>,
     #[serde(default)]
@@ -79,6 +82,30 @@ pub struct TweakInfo {
     pub reboot: bool,
     pub explorer: bool,
     pub risk: Option<String>,
+    pub vendor: Option<String>,
+    /// Resumen legible de lo que toca (para "Ver detalles").
+    pub changes: Vec<String>,
+}
+
+fn changes(t: &Tweak) -> Vec<String> {
+    let mut v = Vec::new();
+    for r in &t.reg {
+        let val = match &r.value {
+            Value::String(s) => format!("\"{s}\""),
+            other => other.to_string(),
+        };
+        v.push(format!("Registro: {}\\{} = {}", r.path, r.name, val));
+    }
+    for s in &t.svc {
+        v.push(format!("Servicio {}: inicio {} (antes {})", s.name, s.start, s.default));
+    }
+    for k in &t.tasks {
+        v.push(format!("Tarea programada desactivada: {}{}", k.path, k.name));
+    }
+    if t.ps.is_some() {
+        v.push("Script de PowerShell (comando propio de Windows)".into());
+    }
+    v
 }
 
 pub fn catalog() -> &'static Vec<Tweak> {
@@ -107,6 +134,8 @@ pub fn list() -> Vec<TweakInfo> {
             reboot: t.reboot,
             explorer: t.explorer,
             risk: t.risk.clone(),
+            vendor: t.vendor.clone(),
+            changes: changes(t),
         })
         .collect()
 }
@@ -328,7 +357,7 @@ mod tests {
         ids.dedup();
         assert_eq!(ids.len(), c.len(), "IDs repetidos");
         for t in c {
-            assert!(["privacidad", "interfaz", "sistema", "rendimiento", "seguridad"].contains(&t.category.as_str()), "{}", t.id);
+            assert!(["privacidad", "interfaz", "sistema", "rendimiento", "gpu", "seguridad"].contains(&t.category.as_str()), "{}", t.id);
             assert!(!t.reg.is_empty() || !t.svc.is_empty() || !t.tasks.is_empty() || t.ps.is_some(), "{} vacío", t.id);
         }
     }

@@ -109,3 +109,38 @@ if ($active -match '{guid}') {{ powercfg.exe /setactive {guid} }}"
     ))
     .map(|_| ())
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct PowerStatus {
+    /// Porcentaje de batería (None en sobremesa).
+    pub battery: Option<u32>,
+    pub plugged: bool,
+    /// Temperatura de la zona térmica ACPI en °C (no todas las placas la exponen).
+    pub temp: Option<f64>,
+}
+
+pub fn status() -> Result<PowerStatus, String> {
+    ps::run_json(
+        r#"
+$b = Get-CimInstance Win32_Battery -ErrorAction SilentlyContinue | Select-Object -First 1
+$temp = $null
+try {
+  $t = Get-CimInstance -Namespace root/wmi -ClassName MSAcpi_ThermalZoneTemperature -ErrorAction Stop | Select-Object -First 1
+  if ($t) { $c = [math]::Round($t.CurrentTemperature / 10 - 273.15, 1); if ($c -gt 5 -and $c -lt 120) { $temp = $c } }
+} catch { }
+ConvertTo-Json -Compress -InputObject @{
+  battery = $(if ($b) { [int]$b.EstimatedChargeRemaining } else { $null })
+  plugged = $(if ($b) { $b.BatteryStatus -ne 1 } else { $true })
+  temp = $temp
+}
+"#,
+    )
+}
+
+pub fn open_settings() -> Result<(), String> {
+    ps::command("control.exe")
+        .arg("powercfg.cpl")
+        .spawn()
+        .map(|_| ())
+        .map_err(|e| e.to_string())
+}

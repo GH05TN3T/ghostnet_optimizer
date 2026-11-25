@@ -1,8 +1,10 @@
 // Sin ventana de consola en release.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod apps;
 mod bloat;
 mod cleanup;
+mod games;
 mod power;
 mod ps;
 mod startup;
@@ -138,6 +140,45 @@ async fn power_set_setting(guid: String, id: String, ac: u32, dc: u32) -> R<()> 
     blocking(move || power::set_setting(&guid, &id, ac, dc)).await
 }
 
+#[tauri::command]
+async fn power_status() -> R<power::PowerStatus> {
+    blocking(power::status).await
+}
+
+#[tauri::command]
+fn open_power_settings() -> R<()> {
+    power::open_settings()
+}
+
+// ---------- Apps (winget) ----------
+
+#[tauri::command]
+async fn apps_list() -> R<apps::AppList> {
+    blocking(apps::list).await
+}
+
+#[tauri::command]
+async fn app_install(id: String) -> R<()> {
+    blocking(move || apps::install(&id)).await
+}
+
+#[tauri::command]
+async fn app_uninstall(id: String) -> R<()> {
+    blocking(move || apps::uninstall(&id)).await
+}
+
+// ---------- Juegos ----------
+
+#[tauri::command]
+async fn games_list() -> R<Vec<games::Game>> {
+    blocking(games::list).await
+}
+
+#[tauri::command]
+async fn game_optimize(exe: String, enable: bool) -> R<()> {
+    blocking(move || games::optimize(&exe, enable)).await
+}
+
 // ---------- Limpieza ----------
 
 #[tauri::command]
@@ -200,6 +241,13 @@ fn main() {
             power_delete,
             power_settings,
             power_set_setting,
+            power_status,
+            open_power_settings,
+            apps_list,
+            app_install,
+            app_uninstall,
+            games_list,
+            game_optimize,
             scan_junk,
             clean_junk,
             component_cleanup,

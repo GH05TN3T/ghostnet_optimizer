@@ -28,5 +28,6 @@ export const CATEGORY_LABEL: Record<string, string> = {
   interfaz: "Interfaz",
   sistema: "Sistema",
   rendimiento: "Rendimiento y juegos",
+  gpu: "Gráfica",
   seguridad: "Seguridad (riesgo)",
 };

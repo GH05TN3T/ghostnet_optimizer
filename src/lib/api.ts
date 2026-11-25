@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 
-export type Category = "privacidad" | "interfaz" | "sistema" | "rendimiento" | "seguridad";
+export type Category = "privacidad" | "interfaz" | "sistema" | "rendimiento" | "gpu" | "seguridad";
 
 export interface TweakInfo {
   id: string;
@@ -11,6 +11,31 @@ export interface TweakInfo {
   reboot: boolean;
   explorer: boolean;
   risk: string | null;
+  vendor: string | null;
+  changes: string[];
+}
+
+export interface AppItem {
+  id: string;
+  name: string;
+  desc: string;
+  category: string;
+  popular: number;
+  color: string;
+  installed: boolean;
+}
+
+export interface Game {
+  name: string;
+  source: string;
+  exe: string;
+  optimized: boolean;
+}
+
+export interface PowerStatus {
+  battery: number | null;
+  plugged: boolean;
+  temp: number | null;
 }
 
 export interface SysInfo {
@@ -143,6 +168,16 @@ export const api = {
   powerSettings: (guid: string) => call<PlanSetting[]>("power_settings", { guid }),
   powerSetSetting: (guid: string, id: string, ac: number, dc: number) =>
     call<void>("power_set_setting", { guid, id, ac, dc }),
+
+  powerStatus: () => call<PowerStatus>("power_status"),
+  openPowerSettings: () => call<void>("open_power_settings"),
+
+  appsList: () => call<{ winget: boolean; apps: AppItem[] }>("apps_list"),
+  appInstall: (id: string) => call<void>("app_install", { id }),
+  appUninstall: (id: string) => call<void>("app_uninstall", { id }),
+
+  gamesList: () => call<Game[]>("games_list"),
+  gameOptimize: (exe: string, enable: boolean) => call<void>("game_optimize", { exe, enable }),
 
   scanJunk: () => call<JunkCategory[]>("scan_junk"),
   cleanJunk: (ids: string[]) => call<number>("clean_junk", { ids }),

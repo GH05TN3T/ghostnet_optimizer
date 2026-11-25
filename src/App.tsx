@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CommandPalette } from "./components/CommandPalette";
 import {
+  IconArchive,
   IconBolt,
-  IconBox,
   IconBroom,
   IconGamepad,
-  IconGauge,
   IconGhost,
+  IconGrid,
   IconHome,
   IconRestore,
   IconSearch,
   IconShield,
   IconSliders,
+  IconTrash,
+  IconWrench,
 } from "./components/Icons";
 import { api, errMsg, inTauri } from "./lib/api";
 import { useStats, useToast } from "./lib/store";
@@ -22,17 +24,21 @@ import Debloat from "./pages/Debloat";
 import Gaming from "./pages/Gaming";
 import Power from "./pages/Power";
 import Cleanup from "./pages/Cleanup";
+import Apps from "./pages/Apps";
+import Compress from "./pages/Compress";
 
-export type PageId = "home" | "optimize" | "tweaks" | "debloat" | "gaming" | "power" | "cleanup";
+export type PageId = "home" | "gaming" | "apps" | "debloat" | "cleanup" | "optimize" | "tweaks" | "compress" | "power";
 
 const PAGES: { id: PageId; label: string; icon: ReactNode }[] = [
   { id: "home", label: "Inicio", icon: <IconHome /> },
-  { id: "optimize", label: "Optimización", icon: <IconGauge /> },
-  { id: "tweaks", label: "Tweaks", icon: <IconSliders /> },
-  { id: "debloat", label: "Debloat", icon: <IconBox /> },
   { id: "gaming", label: "Gaming", icon: <IconGamepad /> },
-  { id: "power", label: "Energía", icon: <IconBolt /> },
+  { id: "apps", label: "Apps", icon: <IconGrid /> },
+  { id: "debloat", label: "Debloat", icon: <IconTrash /> },
   { id: "cleanup", label: "Limpieza", icon: <IconBroom /> },
+  { id: "optimize", label: "Optimización", icon: <IconSliders /> },
+  { id: "tweaks", label: "Tweaks", icon: <IconWrench /> },
+  { id: "compress", label: "Comprimir", icon: <IconArchive /> },
+  { id: "power", label: "Energía", icon: <IconBolt /> },
 ];
 
 export default function App() {
@@ -147,6 +153,8 @@ export default function App() {
           {page === "gaming" && <Gaming />}
           {page === "power" && <Power />}
           {page === "cleanup" && <Cleanup />}
+          {page === "apps" && <Apps />}
+          {page === "compress" && <Compress />}
         </div>
       </main>
 

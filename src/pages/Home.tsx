@@ -173,7 +173,7 @@ export default function Home({ go }: { go: (p: PageId) => void }) {
     { label: "Limpieza", sub: "Borra basura", tone: "pink", icon: <IconBroom />, run: () => go("cleanup") },
     { label: "Debloat", sub: "Quita apps", tone: "purple", icon: <IconBox />, run: () => go("debloat") },
     { label: "Optimizar", sub: "Más rendimiento", tone: "orange", icon: <IconGauge />, run: () => go("optimize") },
-    { label: "Comprimir", sub: "Ahorra espacio", tone: "blue", icon: <IconArchive />, run: () => go("cleanup") },
+    { label: "Comprimir", sub: "Ahorra espacio", tone: "blue", icon: <IconArchive />, run: () => go("compress") },
     { label: ram ? "Liberando…" : "Liberar RAM", sub: "Libera memoria", tone: "green", icon: <IconSparkle />, run: freeRam },
   ];
 

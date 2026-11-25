@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { IconBroom, IconRefresh } from "../components/Icons";
-import { Badge, Button, Card, Confirm, Empty, PageHeader, Toggle } from "../components/ui";
+import { PageHero, Perks } from "../components/Hero";
+import { IconBroom, IconLeaf, IconRefresh, IconRocket, IconShield } from "../components/Icons";
+import { Badge, Button, Card, Empty, Toggle } from "../components/ui";
 import { api, errMsg, type JunkCategory, type StartupItem } from "../lib/api";
 import { bytes } from "../lib/format";
 import { useToast } from "../lib/store";
@@ -22,11 +23,6 @@ export default function Cleanup() {
 
   const [startup, setStartup] = useState<StartupItem[]>([]);
   const [stBusy, setStBusy] = useState<string | null>(null);
-
-  const [compact, setCompact] = useState<string>("");
-  const [compactBusy, setCompactBusy] = useState(false);
-  const [compactConfirm, setCompactConfirm] = useState<null | boolean>(null);
-  const [dismBusy, setDismBusy] = useState(false);
 
   const scan = useCallback(async () => {
     setScanning(true);
@@ -52,7 +48,6 @@ export default function Cleanup() {
   useEffect(() => {
     scan();
     loadStartup();
-    api.compactQuery().then(setCompact).catch(() => {});
   }, [scan, loadStartup]);
 
   const total = junk.filter((j) => sel.has(j.id)).reduce((a, j) => a + j.size, 0);
@@ -82,51 +77,34 @@ export default function Cleanup() {
     }
   };
 
-  const runCompact = async (enable: boolean) => {
-    setCompactBusy(true);
-    toast("Comprimiendo Windows… puede tardar entre 5 y 20 minutos. No apagues el equipo.", "info");
-    try {
-      await api.compactSet(enable);
-      setCompact(await api.compactQuery());
-      toast(enable ? "Windows comprimido" : "Compresión desactivada");
-    } catch (e) {
-      toast(errMsg(e), "error");
-    } finally {
-      setCompactBusy(false);
-    }
-  };
-
-  const runDism = async () => {
-    setDismBusy(true);
-    toast("Limpiando componentes de Windows con DISM… tarda varios minutos.", "info");
-    try {
-      await api.componentCleanup();
-      toast("Limpieza de componentes terminada");
-    } catch (e) {
-      toast(errMsg(e), "error");
-    } finally {
-      setDismBusy(false);
-    }
-  };
-
   const enabledCount = startup.filter((s) => s.enabled).length;
 
   return (
     <>
-      <PageHeader
+      <PageHero
+        icon={<IconBroom size={30} />}
         title="Limpieza"
-        subtitle="Archivos basura, programas de inicio y compresión del sistema."
-        actions={
-          <>
-            <Button icon={<IconRefresh />} loading={scanning} onClick={scan}>
-              Analizar
-            </Button>
-            <Button variant="primary" icon={<IconBroom />} loading={cleaning} disabled={!sel.size || scanning} onClick={clean}>
-              Limpiar {total ? bytes(total) : ""}
-            </Button>
-          </>
+        subtitle="Borra archivos basura y decide qué se abre al iniciar Windows."
+        art="nebula"
+        side={
+          <Perks
+            items={[
+              { icon: <IconLeaf size={16} />, title: "Más espacio", sub: "Temporales y cachés" },
+              { icon: <IconRocket size={16} />, title: "Arranque rápido", sub: "Menos programas al iniciar" },
+              { icon: <IconShield size={16} />, title: "Seguro", sub: "Salta archivos en uso" },
+            ]}
+          />
         }
       />
+
+      <div className="toolbar toolbar--end">
+        <Button icon={<IconRefresh />} loading={scanning} onClick={scan}>
+          Analizar
+        </Button>
+        <Button variant="primary" icon={<IconBroom />} loading={cleaning} disabled={!sel.size || scanning} onClick={clean}>
+          Limpiar {total ? bytes(total) : ""}
+        </Button>
+      </div>
 
       <Card title="Archivos basura">
         <div className="junk">
@@ -181,45 +159,6 @@ export default function Cleanup() {
         </p>
       </Card>
 
-      <div className="grid-2">
-        <Card title="Comprimir Windows (CompactOS)">
-          <p className="muted">
-            Comprime los archivos del sistema sin borrar nada. Suele liberar 2–6 GB con un impacto mínimo en rendimiento en SSD.
-            Útil en discos pequeños.
-          </p>
-          {compact && <pre className="out">{compact.trim()}</pre>}
-          <div className="quick">
-            <Button loading={compactBusy} onClick={() => setCompactConfirm(true)}>
-              Comprimir
-            </Button>
-            <Button variant="ghost" disabled={compactBusy} onClick={() => setCompactConfirm(false)}>
-              Descomprimir
-            </Button>
-          </div>
-        </Card>
-        <Card title="Limpieza de componentes (WinSxS)">
-          <p className="muted">
-            Usa DISM para borrar versiones antiguas de componentes que dejaron las actualizaciones. Seguro, pero tarda varios
-            minutos y no se pueden desinstalar las actualizaciones ya aplicadas.
-          </p>
-          <div className="quick">
-            <Button loading={dismBusy} onClick={runDism}>
-              Limpiar componentes
-            </Button>
-          </div>
-        </Card>
-      </div>
-
-      <Confirm
-        open={compactConfirm !== null}
-        title={compactConfirm ? "Comprimir Windows" : "Descomprimir Windows"}
-        confirmText={compactConfirm ? "Comprimir" : "Descomprimir"}
-        onConfirm={() => runCompact(!!compactConfirm)}
-        onClose={() => setCompactConfirm(null)}
-      >
-        El proceso tarda entre 5 y 20 minutos y usa bastante disco y CPU mientras dura. Puedes seguir usando la app, pero no apagues
-        el equipo hasta que termine.
-      </Confirm>
     </>
   );
 }

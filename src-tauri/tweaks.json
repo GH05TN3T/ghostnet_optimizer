@@ -6,12 +6,28 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection", "name": "AllowTelemetry", "value": 0 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+        "name": "AllowTelemetry",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+        "name": "AllowTelemetry",
+        "value": 0
+      }
     ],
     "svc": [
-      { "name": "DiagTrack", "start": "Disabled", "default": "Automatic" },
-      { "name": "dmwappushservice", "start": "Disabled", "default": "Manual" }
+      {
+        "name": "DiagTrack",
+        "start": "Disabled",
+        "default": "Automatic"
+      },
+      {
+        "name": "dmwappushservice",
+        "start": "Disabled",
+        "default": "Manual"
+      }
     ]
   },
   {
@@ -21,12 +37,30 @@
     "category": "privacidad",
     "recommended": true,
     "tasks": [
-      { "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\", "name": "Consolidator" },
-      { "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\", "name": "UsbCeip" },
-      { "path": "\\Microsoft\\Windows\\Application Experience\\", "name": "Microsoft Compatibility Appraiser" },
-      { "path": "\\Microsoft\\Windows\\Application Experience\\", "name": "ProgramDataUpdater" },
-      { "path": "\\Microsoft\\Windows\\Autochk\\", "name": "Proxy" },
-      { "path": "\\Microsoft\\Windows\\DiskDiagnostic\\", "name": "Microsoft-Windows-DiskDiagnosticDataCollector" }
+      {
+        "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+        "name": "Consolidator"
+      },
+      {
+        "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+        "name": "UsbCeip"
+      },
+      {
+        "path": "\\Microsoft\\Windows\\Application Experience\\",
+        "name": "Microsoft Compatibility Appraiser"
+      },
+      {
+        "path": "\\Microsoft\\Windows\\Application Experience\\",
+        "name": "ProgramDataUpdater"
+      },
+      {
+        "path": "\\Microsoft\\Windows\\Autochk\\",
+        "name": "Proxy"
+      },
+      {
+        "path": "\\Microsoft\\Windows\\DiskDiagnostic\\",
+        "name": "Microsoft-Windows-DiskDiagnosticDataCollector"
+      }
     ]
   },
   {
@@ -36,8 +70,17 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled", "value": 0, "default": 1 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo", "name": "DisabledByGroupPolicy", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+        "name": "Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+        "name": "DisabledByGroupPolicy",
+        "value": 1
+      }
     ]
   },
   {
@@ -47,9 +90,21 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "PublishUserActivities", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "UploadUserActivities", "value": 0 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "name": "EnableActivityFeed",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "name": "PublishUserActivities",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "name": "UploadUserActivities",
+        "value": 0
+      }
     ]
   },
   {
@@ -59,7 +114,12 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy", "name": "TailoredExperiencesWithDiagnosticDataEnabled", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+        "name": "TailoredExperiencesWithDiagnosticDataEnabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -69,8 +129,16 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "DoNotShowFeedbackNotifications", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Siuf\\Rules",
+        "name": "NumberOfSIUFInPeriod",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+        "name": "DoNotShowFeedbackNotifications",
+        "value": 1
+      }
     ]
   },
   {
@@ -80,8 +148,16 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "BingSearchEnabled", "value": 0 },
-      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer", "name": "DisableSearchBoxSuggestions", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "name": "BingSearchEnabled",
+        "value": 0
+      },
+      {
+        "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+        "name": "DisableSearchBoxSuggestions",
+        "value": 1
+      }
     ]
   },
   {
@@ -91,9 +167,21 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "value": 1 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "value": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowCopilotButton", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+        "name": "TurnOffWindowsCopilot",
+        "value": 1
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+        "name": "TurnOffWindowsCopilot",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "ShowCopilotButton",
+        "value": 0
+      }
     ]
   },
   {
@@ -103,8 +191,16 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI", "name": "DisableAIDataAnalysis", "value": 1 },
-      { "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsAI", "name": "DisableAIDataAnalysis", "value": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+        "name": "DisableAIDataAnalysis",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+        "name": "DisableAIDataAnalysis",
+        "value": 1
+      }
     ]
   },
   {
@@ -114,12 +210,41 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableWindowsConsumerFeatures", "value": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SilentInstalledAppsEnabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SystemPaneSuggestionsEnabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338388Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "PreInstalledAppsEnabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "OemPreInstalledAppsEnabled", "value": 0, "default": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+        "name": "DisableWindowsConsumerFeatures",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SilentInstalledAppsEnabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SystemPaneSuggestionsEnabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-338388Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "PreInstalledAppsEnabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "OemPreInstalledAppsEnabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -129,10 +254,29 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SoftLandingEnabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338389Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-310093Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement", "name": "ScoobeSystemSettingEnabled", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SoftLandingEnabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-338389Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-310093Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+        "name": "ScoobeSystemSettingEnabled",
+        "value": 0
+      }
     ]
   },
   {
@@ -142,8 +286,18 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "RotatingLockScreenOverlayEnabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338387Enabled", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "RotatingLockScreenOverlayEnabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-338387Enabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -153,9 +307,24 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338393Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353694Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353696Enabled", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-338393Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-353694Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-353696Enabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -165,10 +334,30 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization", "name": "RestrictImplicitInkCollection", "value": 1, "default": 0 },
-      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization", "name": "RestrictImplicitTextCollection", "value": 1, "default": 0 },
-      { "path": "HKCU\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore", "name": "HarvestContacts", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Personalization\\Settings", "name": "AcceptedPrivacyPolicy", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\InputPersonalization",
+        "name": "RestrictImplicitInkCollection",
+        "value": 1,
+        "default": 0
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\InputPersonalization",
+        "name": "RestrictImplicitTextCollection",
+        "value": 1,
+        "default": 0
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+        "name": "HarvestContacts",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Personalization\\Settings",
+        "name": "AcceptedPrivacyPolicy",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -178,10 +367,18 @@
     "category": "privacidad",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "value": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
+        "name": "Disabled",
+        "value": 1
+      }
     ],
     "svc": [
-      { "name": "WerSvc", "start": "Disabled", "default": "Manual" }
+      {
+        "name": "WerSvc",
+        "start": "Disabled",
+        "default": "Manual"
+      }
     ]
   },
   {
@@ -191,7 +388,13 @@
     "category": "privacidad",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location", "name": "Value", "value": "Deny", "type": "String", "default": "Allow" }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+        "name": "Value",
+        "value": "Deny",
+        "type": "String",
+        "default": "Allow"
+      }
     ]
   },
   {
@@ -201,10 +404,14 @@
     "category": "privacidad",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "Start_TrackProgs",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
-
   {
     "id": "dark_mode",
     "name": "Modo oscuro",
@@ -212,8 +419,18 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "AppsUseLightTheme", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "SystemUsesLightTheme", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "name": "AppsUseLightTheme",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "name": "SystemUsesLightTheme",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -223,7 +440,12 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "HideFileExt", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "HideFileExt",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -233,7 +455,12 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Hidden", "value": 1, "default": 2 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "Hidden",
+        "value": 1,
+        "default": 2
+      }
     ]
   },
   {
@@ -256,7 +483,11 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "TaskbarAl",
+        "value": 0
+      }
     ]
   },
   {
@@ -266,8 +497,16 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Dsh", "name": "AllowNewsAndInterests", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds", "name": "EnableFeeds", "value": 0 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Dsh",
+        "name": "AllowNewsAndInterests",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds",
+        "name": "EnableFeeds",
+        "value": 0
+      }
     ]
   },
   {
@@ -277,7 +516,11 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowTaskViewButton", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "ShowTaskViewButton",
+        "value": 0
+      }
     ]
   },
   {
@@ -287,7 +530,11 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "name": "SearchboxTaskbarMode",
+        "value": 0
+      }
     ]
   },
   {
@@ -297,7 +544,11 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarMn", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "TaskbarMn",
+        "value": 0
+      }
     ]
   },
   {
@@ -307,7 +558,11 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings", "name": "TaskbarEndTask", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
+        "name": "TaskbarEndTask",
+        "value": 1
+      }
     ]
   },
   {
@@ -317,8 +572,16 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "value": 0 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_AccountNotifications", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "Start_IrisRecommendations",
+        "value": 0
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "Start_AccountNotifications",
+        "value": 0
+      }
     ]
   },
   {
@@ -328,7 +591,11 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "LaunchTo", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "LaunchTo",
+        "value": 1
+      }
     ]
   },
   {
@@ -338,7 +605,11 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowSecondsInSystemClock", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "ShowSecondsInSystemClock",
+        "value": 1
+      }
     ]
   },
   {
@@ -348,7 +619,12 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "name": "EnableTransparency", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "name": "EnableTransparency",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -358,8 +634,19 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Control Panel\\Desktop\\WindowMetrics", "name": "MinAnimate", "value": "0", "type": "String", "default": "1" },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAnimations", "value": 0, "default": 1 }
+      {
+        "path": "HKCU\\Control Panel\\Desktop\\WindowMetrics",
+        "name": "MinAnimate",
+        "value": "0",
+        "type": "String",
+        "default": "1"
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "TaskbarAnimations",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -369,7 +656,13 @@
     "category": "interfaz",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Control Panel\\Desktop", "name": "MenuShowDelay", "value": "0", "type": "String", "default": "400" }
+      {
+        "path": "HKCU\\Control Panel\\Desktop",
+        "name": "MenuShowDelay",
+        "value": "0",
+        "type": "String",
+        "default": "400"
+      }
     ]
   },
   {
@@ -379,10 +672,13 @@
     "category": "interfaz",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "name": "VerboseStatus", "value": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "name": "VerboseStatus",
+        "value": 1
+      }
     ]
   },
-
   {
     "id": "long_paths",
     "name": "Permitir rutas largas",
@@ -390,7 +686,12 @@
     "category": "sistema",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem", "name": "LongPathsEnabled", "value": 1, "default": 0 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+        "name": "LongPathsEnabled",
+        "value": 1,
+        "default": 0
+      }
     ]
   },
   {
@@ -400,7 +701,11 @@
     "category": "sistema",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode", "value": 0 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+        "name": "DODownloadMode",
+        "value": 0
+      }
     ]
   },
   {
@@ -410,7 +715,12 @@
     "category": "sistema",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "value": 0, "default": 1 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+        "name": "fAllowToGetHelp",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -420,10 +730,26 @@
     "category": "sistema",
     "recommended": true,
     "svc": [
-      { "name": "Fax", "start": "Disabled", "default": "Manual" },
-      { "name": "MapsBroker", "start": "Disabled", "default": "AutomaticDelayed" },
-      { "name": "RetailDemo", "start": "Disabled", "default": "Manual" },
-      { "name": "lfsvc", "start": "Disabled", "default": "Manual" }
+      {
+        "name": "Fax",
+        "start": "Disabled",
+        "default": "Manual"
+      },
+      {
+        "name": "MapsBroker",
+        "start": "Disabled",
+        "default": "AutomaticDelayed"
+      },
+      {
+        "name": "RetailDemo",
+        "start": "Disabled",
+        "default": "Manual"
+      },
+      {
+        "name": "lfsvc",
+        "start": "Disabled",
+        "default": "Manual"
+      }
     ]
   },
   {
@@ -433,7 +759,12 @@
     "category": "sistema",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power", "name": "HiberbootEnabled", "value": 0, "default": 1 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "name": "HiberbootEnabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   },
   {
@@ -467,7 +798,11 @@
     "category": "sistema",
     "recommended": false,
     "svc": [
-      { "name": "SysMain", "start": "Disabled", "default": "Automatic" }
+      {
+        "name": "SysMain",
+        "start": "Disabled",
+        "default": "Automatic"
+      }
     ]
   },
   {
@@ -477,7 +812,11 @@
     "category": "sistema",
     "recommended": false,
     "svc": [
-      { "name": "WSearch", "start": "Disabled", "default": "AutomaticDelayed" }
+      {
+        "name": "WSearch",
+        "start": "Disabled",
+        "default": "AutomaticDelayed"
+      }
     ]
   },
   {
@@ -487,7 +826,11 @@
     "category": "sistema",
     "recommended": false,
     "svc": [
-      { "name": "Spooler", "start": "Disabled", "default": "Automatic" }
+      {
+        "name": "Spooler",
+        "start": "Disabled",
+        "default": "Automatic"
+      }
     ]
   },
   {
@@ -497,7 +840,11 @@
     "category": "sistema",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate", "name": "ExcludeWUDriversInQualityUpdate", "value": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+        "name": "ExcludeWUDriversInQualityUpdate",
+        "value": 1
+      }
     ]
   },
   {
@@ -507,11 +854,18 @@
     "category": "sistema",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications", "name": "GlobalUserDisabled", "value": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "BackgroundAppGlobalToggle", "value": 0 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+        "name": "GlobalUserDisabled",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "name": "BackgroundAppGlobalToggle",
+        "value": 0
+      }
     ]
   },
-
   {
     "id": "game_mode",
     "name": "Activar Modo juego",
@@ -519,8 +873,16 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Software\\Microsoft\\GameBar", "name": "AutoGameModeEnabled", "value": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\GameBar", "name": "AllowAutoGameMode", "value": 1 }
+      {
+        "path": "HKCU\\Software\\Microsoft\\GameBar",
+        "name": "AutoGameModeEnabled",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\GameBar",
+        "name": "AllowAutoGameMode",
+        "value": 1
+      }
     ]
   },
   {
@@ -530,9 +892,22 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_Enabled", "value": 0, "default": 1 },
-      { "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "value": 0 },
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR", "name": "AllowGameDVR", "value": 0 }
+      {
+        "path": "HKCU\\System\\GameConfigStore",
+        "name": "GameDVR_Enabled",
+        "value": 0,
+        "default": 1
+      },
+      {
+        "path": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+        "name": "AppCaptureEnabled",
+        "value": 0
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+        "name": "AllowGameDVR",
+        "value": 0
+      }
     ]
   },
   {
@@ -542,22 +917,85 @@
     "category": "rendimiento",
     "recommended": false,
     "reg": [
-      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "value": 2 },
-      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_FSEBehavior", "value": 2 },
-      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_HonorUserFSEBehaviorMode", "value": 1 },
-      { "path": "HKCU\\System\\GameConfigStore", "name": "GameDVR_DXGIHonorFSEWindowsCompatible", "value": 1 }
+      {
+        "path": "HKCU\\System\\GameConfigStore",
+        "name": "GameDVR_FSEBehaviorMode",
+        "value": 2
+      },
+      {
+        "path": "HKCU\\System\\GameConfigStore",
+        "name": "GameDVR_FSEBehavior",
+        "value": 2
+      },
+      {
+        "path": "HKCU\\System\\GameConfigStore",
+        "name": "GameDVR_HonorUserFSEBehaviorMode",
+        "value": 1
+      },
+      {
+        "path": "HKCU\\System\\GameConfigStore",
+        "name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+        "value": 1
+      }
     ]
   },
   {
     "id": "hags",
     "name": "Programación de GPU acelerada por hardware",
     "desc": "La GPU gestiona su propia memoria (HAGS). Requiere GPU NVIDIA GTX 1000+ / AMD RX 5000+ y reiniciar. Necesario para DLSS Frame Generation.",
-    "category": "rendimiento",
+    "category": "gpu",
     "recommended": false,
     "reboot": true,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers", "name": "HwSchMode", "value": 2, "default": 1 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+        "name": "HwSchMode",
+        "value": 2,
+        "default": 1
+      }
     ]
+  },
+  {
+    "id": "mpo",
+    "name": "Desactivar MPO (Multi-Plane Overlay)",
+    "desc": "Arregla parpadeos, pantallas negras y tirones en juegos en ventana sin bordes con algunas gráficas NVIDIA y AMD. Requiere reiniciar.",
+    "category": "gpu",
+    "recommended": false,
+    "reboot": true,
+    "reg": [
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+        "name": "OverlayTestMode",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "nvidia_telemetry",
+    "name": "Desactivar telemetría de NVIDIA",
+    "desc": "Desactiva las tareas de informes de NVIDIA (NvTm*) y el contenedor de telemetría de drivers antiguos.",
+    "category": "gpu",
+    "vendor": "nvidia",
+    "recommended": true,
+    "ps": {
+      "check": "$t = @(Get-ScheduledTask -TaskName 'NvTm*' -ErrorAction SilentlyContinue); $s = Get-Service -Name NvTelemetryContainer -ErrorAction SilentlyContinue; (@($t | Where-Object { [string]$_.State -ne 'Disabled' }).Count -eq 0) -and ((-not $s) -or ([string]$s.StartType -eq 'Disabled'))",
+      "apply": "Get-ScheduledTask -TaskName 'NvTm*' -ErrorAction SilentlyContinue | Disable-ScheduledTask | Out-Null; if (Get-Service -Name NvTelemetryContainer -ErrorAction SilentlyContinue) { Stop-Service -Name NvTelemetryContainer -Force -ErrorAction SilentlyContinue; Set-Service -Name NvTelemetryContainer -StartupType Disabled }",
+      "revert": "Get-ScheduledTask -TaskName 'NvTm*' -ErrorAction SilentlyContinue | Enable-ScheduledTask | Out-Null; if (Get-Service -Name NvTelemetryContainer -ErrorAction SilentlyContinue) { Set-Service -Name NvTelemetryContainer -StartupType Automatic }"
+    }
+  },
+  {
+    "id": "amd_ulps",
+    "name": "Desactivar ULPS (AMD)",
+    "desc": "Evita que la gráfica AMD entre en ultra bajo consumo. Quita tirones al salir de reposo y problemas con varias GPU. Requiere reiniciar.",
+    "category": "gpu",
+    "vendor": "amd",
+    "recommended": false,
+    "reboot": true,
+    "ps": {
+      "check": "$any = $false; $ok = $true; foreach ($k in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}' -ErrorAction SilentlyContinue) { $v = Get-Reg $k.PSPath 'EnableUlps'; if ($null -ne $v) { $any = $true; if ($v -ne 0) { $ok = $false } } }; $any -and $ok",
+      "apply": "foreach ($k in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}' -ErrorAction SilentlyContinue) { if ($null -ne (Get-Reg $k.PSPath 'EnableUlps')) { Set-Reg $k.PSPath 'EnableUlps' 0 } }",
+      "revert": "foreach ($k in Get-ChildItem 'Registry::HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}' -ErrorAction SilentlyContinue) { if ($null -ne (Get-Reg $k.PSPath 'EnableUlps')) { Set-Reg $k.PSPath 'EnableUlps' 1 } }"
+    }
   },
   {
     "id": "mouse_accel",
@@ -566,9 +1004,27 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseSpeed", "value": "0", "type": "String", "default": "1" },
-      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseThreshold1", "value": "0", "type": "String", "default": "6" },
-      { "path": "HKCU\\Control Panel\\Mouse", "name": "MouseThreshold2", "value": "0", "type": "String", "default": "10" }
+      {
+        "path": "HKCU\\Control Panel\\Mouse",
+        "name": "MouseSpeed",
+        "value": "0",
+        "type": "String",
+        "default": "1"
+      },
+      {
+        "path": "HKCU\\Control Panel\\Mouse",
+        "name": "MouseThreshold1",
+        "value": "0",
+        "type": "String",
+        "default": "6"
+      },
+      {
+        "path": "HKCU\\Control Panel\\Mouse",
+        "name": "MouseThreshold2",
+        "value": "0",
+        "type": "String",
+        "default": "10"
+      }
     ]
   },
   {
@@ -578,8 +1034,18 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "NetworkThrottlingIndex", "value": -1, "default": 10 },
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "SystemResponsiveness", "value": 10, "default": 20 }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+        "name": "NetworkThrottlingIndex",
+        "value": -1,
+        "default": 10
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+        "name": "SystemResponsiveness",
+        "value": 10,
+        "default": 20
+      }
     ]
   },
   {
@@ -589,10 +1055,32 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "GPU Priority", "value": 8, "default": 8 },
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "Priority", "value": 6, "default": 2 },
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "Scheduling Category", "value": "High", "type": "String", "default": "Medium" },
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games", "name": "SFIO Priority", "value": "High", "type": "String", "default": "Normal" }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+        "name": "GPU Priority",
+        "value": 8,
+        "default": 8
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+        "name": "Priority",
+        "value": 6,
+        "default": 2
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+        "name": "Scheduling Category",
+        "value": "High",
+        "type": "String",
+        "default": "Medium"
+      },
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+        "name": "SFIO Priority",
+        "value": "High",
+        "type": "String",
+        "default": "Normal"
+      }
     ]
   },
   {
@@ -602,7 +1090,12 @@
     "category": "rendimiento",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl", "name": "Win32PrioritySeparation", "value": 38, "default": 2 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+        "name": "Win32PrioritySeparation",
+        "value": 38,
+        "default": 2
+      }
     ]
   },
   {
@@ -612,7 +1105,11 @@
     "category": "rendimiento",
     "recommended": false,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "value": 1 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+        "name": "PowerThrottlingOff",
+        "value": 1
+      }
     ]
   },
   {
@@ -634,9 +1131,27 @@
     "category": "rendimiento",
     "recommended": true,
     "reg": [
-      { "path": "HKCU\\Control Panel\\Accessibility\\StickyKeys", "name": "Flags", "value": "506", "type": "String", "default": "510" },
-      { "path": "HKCU\\Control Panel\\Accessibility\\ToggleKeys", "name": "Flags", "value": "58", "type": "String", "default": "62" },
-      { "path": "HKCU\\Control Panel\\Accessibility\\Keyboard Response", "name": "Flags", "value": "122", "type": "String", "default": "126" }
+      {
+        "path": "HKCU\\Control Panel\\Accessibility\\StickyKeys",
+        "name": "Flags",
+        "value": "506",
+        "type": "String",
+        "default": "510"
+      },
+      {
+        "path": "HKCU\\Control Panel\\Accessibility\\ToggleKeys",
+        "name": "Flags",
+        "value": "58",
+        "type": "String",
+        "default": "62"
+      },
+      {
+        "path": "HKCU\\Control Panel\\Accessibility\\Keyboard Response",
+        "name": "Flags",
+        "value": "122",
+        "type": "String",
+        "default": "126"
+      }
     ]
   },
   {
@@ -646,13 +1161,28 @@
     "category": "rendimiento",
     "recommended": false,
     "svc": [
-      { "name": "XblAuthManager", "start": "Disabled", "default": "Manual" },
-      { "name": "XblGameSave", "start": "Disabled", "default": "Manual" },
-      { "name": "XboxNetApiSvc", "start": "Disabled", "default": "Manual" },
-      { "name": "XboxGipSvc", "start": "Disabled", "default": "Manual" }
+      {
+        "name": "XblAuthManager",
+        "start": "Disabled",
+        "default": "Manual"
+      },
+      {
+        "name": "XblGameSave",
+        "start": "Disabled",
+        "default": "Manual"
+      },
+      {
+        "name": "XboxNetApiSvc",
+        "start": "Disabled",
+        "default": "Manual"
+      },
+      {
+        "name": "XboxGipSvc",
+        "start": "Disabled",
+        "default": "Manual"
+      }
     ]
   },
-
   {
     "id": "windows_update",
     "name": "Desactivar actualizaciones automáticas",
@@ -661,7 +1191,11 @@
     "recommended": false,
     "risk": "high",
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU", "name": "NoAutoUpdate", "value": 1 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+        "name": "NoAutoUpdate",
+        "value": 1
+      }
     ]
   },
   {
@@ -685,7 +1219,11 @@
     "recommended": false,
     "risk": "high",
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableSmartScreen", "value": 0 }
+      {
+        "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "name": "EnableSmartScreen",
+        "value": 0
+      }
     ]
   },
   {
@@ -696,7 +1234,12 @@
     "recommended": false,
     "risk": "high",
     "reg": [
-      { "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "name": "ConsentPromptBehaviorAdmin", "value": 0, "default": 5 }
+      {
+        "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "name": "ConsentPromptBehaviorAdmin",
+        "value": 0,
+        "default": 5
+      }
     ]
   },
   {
@@ -708,7 +1251,12 @@
     "risk": "high",
     "reboot": true,
     "reg": [
-      { "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity", "name": "Enabled", "value": 0, "default": 1 }
+      {
+        "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+        "name": "Enabled",
+        "value": 0,
+        "default": 1
+      }
     ]
   }
 ]

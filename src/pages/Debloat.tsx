@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IconRefresh, IconX } from "../components/Icons";
-import { Badge, Button, Card, Confirm, PageHeader } from "../components/ui";
+import { PageHero, Perks } from "../components/Hero";
+import { IconBolt, IconBox, IconRefresh, IconShield, IconTrash, IconX } from "../components/Icons";
+import { Badge, Button, Card, Confirm } from "../components/ui";
 import { api, errMsg, type BloatApp } from "../lib/api";
 import { useToast } from "../lib/store";
 
@@ -64,11 +65,23 @@ export default function Debloat() {
 
   return (
     <>
-      <PageHeader
+      <PageHero
+        icon={<IconTrash size={30} />}
         title="Debloat"
-        subtitle={loading ? "Buscando apps instaladas…" : `${installed.length} apps preinstaladas encontradas en este equipo.`}
-        actions={
-          <>
+        subtitle={loading ? "Buscando apps preinstaladas…" : `${installed.length} apps preinstaladas encontradas en este equipo.`}
+        art="tiles"
+        side={
+          <Perks
+            items={[
+              { icon: <IconBox size={16} />, title: "Menos apps", sub: "Fuera lo que no usas" },
+              { icon: <IconBolt size={16} />, title: "Menos procesos", sub: "Más RAM libre" },
+              { icon: <IconShield size={16} />, title: "Reversible", sub: "Reinstala desde la Store" },
+            ]}
+          />
+        }
+      />
+
+      <div className="toolbar toolbar--end">
             <Button icon={<IconRefresh />} loading={loading} onClick={load}>
               Actualizar
             </Button>
@@ -78,12 +91,7 @@ export default function Debloat() {
             <Button variant="danger" icon={<IconX />} disabled={!sel.size} loading={removing} onClick={() => setConfirm(true)}>
               Eliminar ({sel.size})
             </Button>
-          </>
-        }
-      />
-
-      <div className="toolbar">
-        <label className="check">
+        <label className="check" style={{ marginRight: "auto", order: -1 }}>
           <input type="checkbox" checked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
           Mostrar también las que no están instaladas
         </label>

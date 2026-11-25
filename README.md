@@ -6,13 +6,15 @@ Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, m
 
 | Página | Qué hace |
 |---|---|
-| **Inicio** | Medidores de CPU/RAM/GPU, gráficos de CPU y red, unidades, ficha del equipo, liberar RAM, punto de restauración |
-| **Optimización** | Puntuación del PC (0–100), recomendaciones con botón de aplicar una por una, y "Optimizar todo" (crea antes un punto de restauración) |
-| **Tweaks** | 63 interruptores en Privacidad, Interfaz, Sistema, Rendimiento y Seguridad (riesgo). Cada uno lee el estado real de Windows y se puede revertir |
-| **Debloat** | Detecta y desinstala ~48 apps preinstaladas (Copilot, OneDrive, Teams, Xbox, Clipchamp, promocionales...) |
-| **Gaming** | Medidores en vivo, uso por núcleo, procesos que más RAM usan (con botón de cerrar), ajustes para juegos y **Modo juego** (Máximo rendimiento + liberar RAM; al salir vuelve tu plan anterior) |
-| **Energía** | Planes de energía, añadir Máximo rendimiento, y editar sus ajustes (CPU mín/máx, turbo, suspensión, USB, PCIe) con vista previa antes de guardar |
-| **Limpieza** | Temporales, caché de Windows Update, volcados, shaders, navegadores, Discord, **caché de FiveM**, papelera; programas de inicio; CompactOS y limpieza de WinSxS |
+| **Inicio** | Medidores en vivo (CPU, RAM, disco, GPU), red con ping y jitter, info del sistema, almacenamiento y acciones rápidas |
+| **Gaming** | Modo juego (Máximo rendimiento + liberar RAM, y vuelve a tu plan al salir), juegos detectados de Steam/Epic/Rockstar/FiveM con optimización por juego (GPU dedicada, pantalla completa real, prioridad alta), ajustes de GPU por marca y ajustes para juegos |
+| **Apps** | 78 apps con instalación y desinstalación en un clic vía winget, por categorías |
+| **Debloat** | Detecta y desinstala ~48 apps preinstaladas (Copilot, OneDrive, Teams, Xbox, Clipchamp...) |
+| **Limpieza** | Temporales, caché de Windows Update, volcados, shaders, navegadores, Discord, caché de FiveM, papelera y programas de inicio |
+| **Optimización** | Puntuación 0–100, mantenimiento, tweaks recomendados por sección, resumen del sistema en vivo y "Aplicar todo" con punto de restauración |
+| **Tweaks** | 66 interruptores en tarjetas por categoría, con "Detalles" que muestra exactamente qué cambia, revertir todo y aplicar recomendados |
+| **Comprimir** | CompactOS, limpieza de WinSxS, quitar hiberfil.sys y el almacenamiento reservado |
+| **Energía** | Planes de energía, estado en vivo, detalles del plan editables y ajustes adicionales (hibernación, inicio rápido, USB, PCIe) |
 
 `Ctrl + K` abre el buscador de páginas y ajustes.
 
@@ -20,7 +22,7 @@ Optimizador para Windows 10/11 al estilo Velotic: debloat, tweaks reversibles, m
 
 1. Sube esta carpeta a un repositorio de GitHub (puede ser privado).
 2. Pestaña **Actions** → **Compilar instalador** → **Run workflow**.
-3. Cuando termine (~10 min la primera vez), descarga el artefacto **GhostNet-Optimizer-setup**: dentro está el instalador `.exe`.
+3. Cuando termine (~10 min la primera vez), descarga el artefacto **GhostNet-Optimizer-setup** (abajo del todo de la página de la compilación): es un zip con el instalador `.exe` dentro.
 
 ## Compilar en tu PC
 
