@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CommandPalette } from "./components/CommandPalette";
+import logo from "./assets/logo.png";
 import {
   IconArchive,
   IconBolt,
   IconBroom,
   IconGamepad,
-  IconGhost,
   IconGrid,
   IconHome,
   IconRestore,
@@ -81,9 +81,7 @@ export default function App() {
     <div className="app">
       <aside className="sidebar">
         <div className="brand">
-          <div className="brand__logo">
-            <IconGhost size={22} />
-          </div>
+          <img className="brand__img" src={logo} alt="GhostNet" />
           <div>
             <strong>GhostNet</strong>
             <small>Optimizer</small>
