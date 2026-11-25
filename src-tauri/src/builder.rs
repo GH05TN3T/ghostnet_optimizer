@@ -141,6 +141,7 @@ pub fn start(app: AppHandle, o: BuildOptions) -> Result<(), String> {
             let _ = app.emit("builder", e);
         };
         let mut done = false;
+        let mut failed = false;
         if let Some(out) = child.stdout.take() {
             for line in BufReader::new(out).lines().map_while(Result::ok) {
                 let mut parts = line.trim_end().splitn(4, '|');
@@ -150,6 +151,10 @@ pub fn start(app: AppHandle, o: BuildOptions) -> Result<(), String> {
                         emit(Event::Step { n, text: parts.collect::<Vec<_>>().join("|") });
                     }
                     Some("@@LOG") => emit(Event::Log { text: parts.collect::<Vec<_>>().join("|") }),
+                    Some("@@ERROR") => {
+                        failed = true;
+                        emit(Event::Error { text: parts.collect::<Vec<_>>().join("|") });
+                    }
                     Some("@@DONE") => {
                         let path = parts.next().unwrap_or_default().to_string();
                         let size = parts.next().and_then(|s| s.parse().ok()).unwrap_or(0);
@@ -166,7 +171,7 @@ pub fn start(app: AppHandle, o: BuildOptions) -> Result<(), String> {
         }
         let status = child.wait();
         let cancelled = RUNNING.lock().map(|r| r.is_none()).unwrap_or(false);
-        if !done && !cancelled {
+        if !done && !cancelled && !failed {
             let ok = status.map(|s| s.success()).unwrap_or(false);
             let msg = err
                 .lines()

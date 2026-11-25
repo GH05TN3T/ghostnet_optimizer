@@ -17,15 +17,66 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 
-function Step([int]$n, [string]$t) { [Console]::Out.WriteLine("@@STEP|$n|$t"); [Console]::Out.Flush() }
+$script:CurrentStep = 0
+function Step([int]$n, [string]$t) { $script:CurrentStep = $n; [Console]::Out.WriteLine("@@STEP|$n|$t"); [Console]::Out.Flush() }
 function Log([string]$t) { [Console]::Out.WriteLine("@@LOG|$t"); [Console]::Out.Flush() }
 
-function Set-Reg([string]$Path, [string]$Name, $Value, [string]$Type = 'DWord') {
+# Algunas claves de la imagen pertenecen a TrustedInstaller y ni un administrador puede
+# escribir en ellas. Para esas, el builder toma posesión de la clave (solo dentro de la
+# imagen montada, nunca en el Windows actual), se da permiso y reintenta.
+Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public static class GnPriv {
+  [DllImport("advapi32.dll", SetLastError = true)] static extern bool OpenProcessToken(IntPtr h, uint acc, out IntPtr tok);
+  [DllImport("advapi32.dll", SetLastError = true)] static extern bool LookupPrivilegeValue(string s, string n, out long luid);
+  [StructLayout(LayoutKind.Sequential, Pack = 1)] struct TP { public int Count; public long Luid; public int Attr; }
+  [DllImport("advapi32.dll", SetLastError = true)] static extern bool AdjustTokenPrivileges(IntPtr t, bool d, ref TP n, int l, IntPtr p, IntPtr r);
+  [DllImport("kernel32.dll")] static extern IntPtr GetCurrentProcess();
+  [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr h);
+  public static void Enable(string name) {
+    IntPtr t;
+    if (!OpenProcessToken(GetCurrentProcess(), 0x28, out t)) return;
+    TP tp = new TP(); tp.Count = 1; tp.Attr = 2;
+    if (LookupPrivilegeValue(null, name, out tp.Luid)) AdjustTokenPrivileges(t, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
+    CloseHandle(t);
+  }
+}
+"@
+function Grant-RegAccess([string]$Path) {
+  $sub = $Path -replace '^Registry::HKEY_LOCAL_MACHINE\\', ''
+  if ($sub -notmatch '^z(SOFTWARE|SYSTEM|DEFAULT|NTUSER)') { return }   # solo hives de la imagen
+  while ($sub -and -not (Test-Path -LiteralPath "Registry::HKEY_LOCAL_MACHINE\$sub")) { $sub = Split-Path $sub -Parent }
+  if (-not $sub) { return }
+  [GnPriv]::Enable('SeTakeOwnershipPrivilege'); [GnPriv]::Enable('SeRestorePrivilege')
+  $admins = New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-544')
+  $rights = [System.Security.AccessControl.RegistryRights]
+  $k = [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey($sub, [Microsoft.Win32.RegistryKeyPermissionCheck]::ReadWriteSubTree, $rights::TakeOwnership)
+  $acl = $k.GetAccessControl([System.Security.AccessControl.AccessControlSections]::None)
+  $acl.SetOwner($admins); $k.SetAccessControl($acl); $k.Close()
+  $k = [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey($sub, [Microsoft.Win32.RegistryKeyPermissionCheck]::ReadWriteSubTree, $rights::ChangePermissions)
+  $acl = $k.GetAccessControl()
+  $acl.SetAccessRule((New-Object System.Security.AccessControl.RegistryAccessRule($admins, 'FullControl', 'ContainerInherit', 'None', 'Allow')))
+  $k.SetAccessControl($acl); $k.Close()
+}
+function Set-RegRaw([string]$Path, [string]$Name, $Value, [string]$Type) {
   if (-not (Test-Path -LiteralPath $Path)) { New-Item -Path $Path -Force | Out-Null }
   New-ItemProperty -LiteralPath $Path -Name $Name -Value $Value -PropertyType $Type -Force | Out-Null
 }
+function Set-Reg([string]$Path, [string]$Name, $Value, [string]$Type = 'DWord') {
+  try { Set-RegRaw $Path $Name $Value $Type }
+  catch {
+    try { Grant-RegAccess $Path; Set-RegRaw $Path $Name $Value $Type }
+    catch { Log "  aviso: no se pudo aplicar $Name ($($_.Exception.Message))" }
+  }
+}
 function Remove-Key([string]$Path) {
-  if (Test-Path -LiteralPath $Path) { Remove-Item -LiteralPath $Path -Recurse -Force -ErrorAction SilentlyContinue }
+  if (-not (Test-Path -LiteralPath $Path)) { return }
+  Remove-Item -LiteralPath $Path -Recurse -Force -ErrorAction SilentlyContinue
+  if (Test-Path -LiteralPath $Path) {
+    try { Grant-RegAccess $Path; Remove-Item -LiteralPath $Path -Recurse -Force -ErrorAction Stop }
+    catch { Log "  aviso: no se pudo borrar $(Split-Path $Path -Leaf)" }
+  }
 }
 function Invoke-Native([string]$Exe, [string[]]$ArgList) {
   $ErrorActionPreference = 'Continue'
@@ -254,7 +305,7 @@ try {
     Set-Reg "$DU\Control Panel\Accessibility\StickyKeys" 'Flags' '506' 'String'
     Set-Reg "$DU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" 'HideFileExt' 0
     if ($removeOneDrive) {
-      Remove-ItemProperty -LiteralPath "$DU\Software\Microsoft\Windows\CurrentVersion\Run" -Name 'OneDriveSetup' -ErrorAction SilentlyContinue
+      try { Remove-ItemProperty -LiteralPath "$DU\Software\Microsoft\Windows\CurrentVersion\Run" -Name 'OneDriveSetup' -ErrorAction Stop } catch { }
     }
     if ($removeEdge) {
       Set-Reg "$SW\Microsoft\EdgeUpdate" 'DoNotUpdateToEdgeWithChromium' 1
@@ -277,7 +328,8 @@ try {
   Step 8 'Limpiando componentes de la imagen'
   if ($DeepClean) {
     Log 'DISM /StartComponentCleanup /ResetBase (tarda varios minutos)'
-    Invoke-Native 'dism.exe' @("/Image:$Mnt", '/Cleanup-Image', '/StartComponentCleanup', '/ResetBase') | Out-Null
+    try { Invoke-Native 'dism.exe' @("/Image:$Mnt", '/Cleanup-Image', '/StartComponentCleanup', '/ResetBase') | Out-Null }
+    catch { Log "  aviso: la limpieza profunda no se pudo completar; la ISO quedará algo más grande ($($_.Exception.Message))" }
   } else { Log 'Omitido' }
 
   # 9 ---------------------------------------------------------------
@@ -365,6 +417,10 @@ try {
   Remove-Item -LiteralPath $Work -Recurse -Force -ErrorAction SilentlyContinue
   $size = (Get-Item -LiteralPath $Out).Length
   [Console]::Out.WriteLine("@@DONE|$Out|$size"); [Console]::Out.Flush()
+}
+catch {
+  $msg = ($_.Exception.Message -replace '\s+', ' ').Trim()
+  [Console]::Out.WriteLine("@@ERROR|Paso $($script:CurrentStep): $msg"); [Console]::Out.Flush()
 }
 finally {
   if ($Hives.Count) { Unload-Hives }
