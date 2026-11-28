@@ -5,6 +5,7 @@ mod apps;
 mod bloat;
 mod builder;
 mod cleanup;
+mod drivers;
 mod games;
 mod isodl;
 mod power;
@@ -272,6 +273,38 @@ async fn startup_set(id: String, enabled: bool) -> R<()> {
     blocking(move || startup::set(&id, enabled)).await
 }
 
+// ---------- Drivers ----------
+
+#[tauri::command]
+async fn drivers_status() -> R<drivers::Status> {
+    blocking(drivers::status).await
+}
+
+#[tauri::command]
+async fn drivers_update(app: tauri::AppHandle) -> R<()> {
+    drivers::update(app)
+}
+
+#[tauri::command]
+async fn wmic_install() -> R<String> {
+    blocking(drivers::wmic_install).await
+}
+
+#[tauri::command]
+async fn open_device_manager() -> R<()> {
+    drivers::open_device_manager()
+}
+
+#[tauri::command]
+async fn open_url(url: String) -> R<()> {
+    drivers::open_url(&url)
+}
+
+#[tauri::command]
+async fn drivers_backup(dir: String) -> R<String> {
+    blocking(move || drivers::backup(&dir)).await
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -322,6 +355,12 @@ fn main() {
             compact_set,
             startup_list,
             startup_set,
+            drivers_status,
+            drivers_update,
+            wmic_install,
+            open_device_manager,
+            open_url,
+            drivers_backup,
         ])
         .run(tauri::generate_context!())
         .expect("error al iniciar la aplicación");

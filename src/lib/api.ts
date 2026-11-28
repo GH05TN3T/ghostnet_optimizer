@@ -163,6 +163,25 @@ function call<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   return invoke<T>(cmd, args);
 }
 
+export interface DriverDevice {
+  name: string;
+  class: string;
+  status: string;
+  problem: number;
+  instance_id: string;
+}
+
+export interface DriversStatus {
+  manufacturer: string;
+  model: string;
+  sku: string;
+  serial: string;
+  bios: string;
+  os: string;
+  missing: DriverDevice[];
+  wmic: "present" | "absent" | "unknown";
+}
+
 export const api = {
   systemInfo: () => call<SysInfo>("system_info"),
   liveStats: () => call<LiveStats>("live_stats"),
@@ -216,6 +235,13 @@ export const api = {
 
   startupList: () => call<StartupItem[]>("startup_list"),
   startupSet: (id: string, enabled: boolean) => call<void>("startup_set", { id, enabled }),
+
+  driversStatus: () => call<DriversStatus>("drivers_status"),
+  driversUpdate: () => call<void>("drivers_update"),
+  wmicInstall: () => call<string>("wmic_install"),
+  openDeviceManager: () => call<void>("open_device_manager"),
+  openUrl: (url: string) => call<void>("open_url", { url }),
+  driversBackup: (dir: string) => call<string>("drivers_backup", { dir }),
 };
 
 export function errMsg(e: unknown): string {

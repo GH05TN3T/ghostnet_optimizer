@@ -3967,3 +3967,99 @@ select option {
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
   }
 }
+
+/* ---------- Página de Drivers ---------- */
+.page-drivers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h3 { font-size: 18px; margin: 0; }
+  h4 {
+    font-size: 15px;
+    margin: 0 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.drv-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+  &__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+}
+
+.drv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  &__text { flex: 1; min-width: 240px; }
+  p { margin: 4px 0 0; }
+}
+
+.drv-progress {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid $line;
+  &__bar {
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    margin-bottom: 6px;
+    span {
+      display: block;
+      height: 100%;
+      border-radius: 99px;
+      background: $accent-grad;
+      transition: width 0.4s ease;
+    }
+  }
+}
+
+.drv-log {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+  li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: $muted;
+    &.ok { color: $ok; }
+    &.bad { color: $warn; }
+  }
+}
+
+.drv-devices {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid $line;
+    background: rgba(255, 255, 255, 0.02);
+    div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    strong { font-size: 13.5px; }
+  }
+}

@@ -7,6 +7,7 @@ import logo from "./assets/logo.png";
 import {
   IconArchive,
   IconBolt,
+  IconChip,
   IconBroom,
   IconGamepad,
   IconGrid,
@@ -31,13 +32,14 @@ import Tweaks from "./pages/Tweaks";
 import Debloat from "./pages/Debloat";
 import Gaming from "./pages/Gaming";
 import Power from "./pages/Power";
+import Drivers from "./pages/Drivers";
 import Cleanup from "./pages/Cleanup";
 import Apps from "./pages/Apps";
 import Compress from "./pages/Compress";
 import Builder from "./pages/Builder";
 import { useBuilder } from "./lib/builder";
 
-export type PageId = "home" | "gaming" | "apps" | "debloat" | "cleanup" | "optimize" | "tweaks" | "compress" | "builder" | "power";
+export type PageId = "home" | "gaming" | "apps" | "debloat" | "cleanup" | "optimize" | "tweaks" | "compress" | "builder" | "power" | "drivers";
 
 const PAGES: { id: PageId; label: string; icon: ReactNode }[] = [
   { id: "home", label: "Inicio", icon: <IconHome /> },
@@ -50,6 +52,7 @@ const PAGES: { id: PageId; label: string; icon: ReactNode }[] = [
   { id: "compress", label: "Comprimir", icon: <IconArchive /> },
   { id: "builder", label: "Builder", icon: <IconLayers /> },
   { id: "power", label: "Energía", icon: <IconBolt /> },
+  { id: "drivers", label: "Drivers", icon: <IconChip /> },
 ];
 
 export default function App() {
@@ -215,6 +218,7 @@ export default function App() {
           {page === "debloat" && <Debloat />}
           {page === "gaming" && <Gaming />}
           {page === "power" && <Power />}
+          {page === "drivers" && <Drivers />}
           {page === "cleanup" && <Cleanup />}
           {page === "apps" && <Apps />}
           {page === "compress" && <Compress />}
